@@ -32,3 +32,39 @@
     @apply border-neutral-300 dark:border-neutral-700;
   }
 }
+
+/* 
+my lightweight version prismjs theme.
+(prismjs splits string into many <span> and assigns classes to them) 
+*/
+html[class="light"] .token.punctuation {
+  color: #777777;
+}
+html[class="light"] .token.tag {
+  color: #4b69c8;
+}
+html[class="light"] .token.attr-name {
+  color: #8190a0;
+}
+html[class="light"] .token.attr-equals {
+  color: #91b3e0;
+}
+html[class="light"] .token.attr-value {
+  color: #448c27;
+}
+
+html[class="dark"] .token.punctuation {
+  color: #6d7e80;
+}
+html[class="dark"] .token.tag {
+  color: #489ad6;
+}
+html[class="dark"] .token.attr-name {
+  color: #9cdcfe;
+}
+html[class="dark"] .token.attr-equals {
+  color: #d4d4d4;
+}
+html[class="dark"] .token.attr-value {
+  color: #b78675;
+}

@@ -4,15 +4,18 @@ import { SessionProvider } from "next-auth/react";
 import type { Session } from "next-auth";
 import type { AppType } from "next/app";
 import { trpc } from "../utils/trpc";
+import { ThemeProvider } from "next-themes";
+import PlausibleProvider from "next-plausible";
 
-const MyApp: AppType<{ session: Session | null }> = ({
-  Component,
-  pageProps: { session, ...pageProps },
-}) => {
+const MyApp: AppType<{ session: Session | null }> = ({ Component, pageProps: { session, ...pageProps } }) => {
   return (
-    <SessionProvider session={session}>
-      <Component {...pageProps} />
-    </SessionProvider>
+    <PlausibleProvider domain="svgbattle.andyfx.net">
+      <ThemeProvider attribute="class">
+        <SessionProvider session={session}>
+          <Component {...pageProps} />
+        </SessionProvider>
+      </ThemeProvider>
+    </PlausibleProvider>
   );
 };
 
