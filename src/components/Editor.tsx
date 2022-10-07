@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import Prism from "prismjs";
 import { Draghandle } from "src/icons/Draghandle";
+import { useCodeContext } from "src/contexts/Code";
 //import "prismjs/components/prism-markup";
 
 const placeholder = `<svg width="100px" height="100px" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -10,11 +11,11 @@ const placeholder = `<svg width="100px" height="100px" viewBox="0 0 100 100" xml
 `;
 
 //const placeholder = "";
-const MIN_HEIGHT = 150;
+const MIN_HEIGHT = 300;
 
 export function Editor() {
   const [mounted, setMounted] = useState(false);
-  const [code, setCode] = useState("");
+  const { code, setCode } = useCodeContext();
   const codeRef = useRef<HTMLElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const textareaId = useId();
@@ -78,7 +79,7 @@ export function Editor() {
           ref={textareaRef}
           spellCheck={false}
           autoComplete="off"
-          className={`min-h-[${MIN_HEIGHT}px] w-full resize-none bg-transparent text-transparent no-underline caret-black dark:caret-white`}
+          className={`min-h-[300px] w-full resize-none bg-transparent text-transparent no-underline caret-black dark:caret-white`}
           onChange={(e) => {
             setCode(e.target.value);
           }}
