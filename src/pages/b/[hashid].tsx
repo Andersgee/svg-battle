@@ -1,7 +1,10 @@
 import { inferAsyncReturnType } from "@trpc/server";
 import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { useRouter } from "next/router";
+import { Battle } from "src/components/Battle";
 import { Head } from "src/components/Head";
+import { CodeProvider } from "src/contexts/Code";
+import { TargetProvider } from "src/contexts/Target";
 //import { trpc } from "src/utils/trpc";
 import { prisma } from "src/server/db/client";
 import { numberFromHashid } from "src/utils/hashids";
@@ -22,18 +25,21 @@ const Page: NextPage<Props> = ({ target, hashid }) => {
 
   //const targetQuery = trpc.target.getAll.useQuery(undefined, { refetchOnWindowFocus: false });
   return (
-    <>
-      <Head
-        title={`${target.title} | battle | svg battle`}
-        description={`Svg battle - ${target.title} by ${target.creator.name}.`}
-        domainUrl="https://svgbattle.andyfx.net"
-        url={`https://svgbattle.andyfx.net/b/${hashid}`}
-      />
-      <main className="">
-        <div>target/battle page</div>
-        <div>{JSON.stringify(target)}</div>
-      </main>
-    </>
+    <CodeProvider>
+      <TargetProvider>
+        <Head
+          title={`${target.title} | battle | svg battle`}
+          description={`Svg battle - ${target.title} by ${target.creator.name}.`}
+          domainUrl="https://svgbattle.andyfx.net"
+          url={`https://svgbattle.andyfx.net/b/${hashid}`}
+        />
+        <main className="">
+          <div>target/battle page</div>
+          <div>{JSON.stringify(target)}</div>
+          <Battle svg={target.svg} />
+        </main>
+      </TargetProvider>
+    </CodeProvider>
   );
 };
 

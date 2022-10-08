@@ -15,13 +15,14 @@ const placeholderTarget = `<svg width="240px" height="240px" viewBox="0 0 240 24
 
 type Props = {
   className?: string;
+  svg: string;
 };
 
-export function Battle({ className }: Props) {
+export function Battle({ className, svg }: Props) {
   const { setCode } = useTargetContext();
   useEffect(() => {
-    setCode(placeholderTarget);
-  }, []);
+    setCode(svg);
+  }, [svg]);
 
   return (
     <div className={className}>

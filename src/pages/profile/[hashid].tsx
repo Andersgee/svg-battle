@@ -1,10 +1,11 @@
 import { inferAsyncReturnType } from "@trpc/server";
 import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { Head } from "src/components/Head";
 //import { trpc } from "src/utils/trpc";
 import { prisma } from "src/server/db/client";
-import { numberFromHashid } from "src/utils/hashids";
+import { hashidFromNumber, numberFromHashid } from "src/utils/hashids";
 import { stringFromParam } from "src/utils/param";
 
 type Props = {
@@ -31,7 +32,27 @@ const Page: NextPage<Props> = ({ user, hashid }) => {
       />
       <main className="">
         <div>user/profile page</div>
-        <div>{JSON.stringify(user)}</div>
+        <p>{JSON.stringify(user)}</p>
+        <h1>{user.name}</h1>
+
+        <h2>created battles</h2>
+        <ul className="">
+          {user.createdTargets.map((target) => (
+            <li key={target.id} className="border-b-2">
+              <Link href={`/b/${hashidFromNumber(target.id)}`}>{target.title}</Link>
+            </li>
+          ))}
+        </ul>
+
+        <h2>completed battles</h2>
+        <ul className="">
+          {user.targetSubmissions.map((target) => (
+            <li key={target.targetId} className="border-b-2">
+              <Link href={`/b/${hashidFromNumber(target.targetId)}`}>{target.target.title}</Link>
+            </li>
+          ))}
+        </ul>
+        {user.targetSubmissions.length === 0 && <p>no battles completed</p>}
       </main>
     </>
   );
@@ -78,7 +99,24 @@ async function getUser(id: number) {
   return prisma.user.findUnique({
     where: { intId: id },
     include: {
-      targetSubmissions: true,
+      targetSubmissions: {
+        select: {
+          targetId: true,
+          createdAt: true,
+          target: {
+            select: {
+              title: true,
+            },
+          },
+        },
+      },
+      createdTargets: {
+        select: {
+          id: true,
+          title: true,
+          createdAt: true,
+        },
+      },
     },
   });
 }
