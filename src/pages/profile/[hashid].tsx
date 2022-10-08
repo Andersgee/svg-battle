@@ -30,29 +30,39 @@ const Page: NextPage<Props> = ({ user, hashid }) => {
         domainUrl="https://svgbattle.andyfx.net"
         url={`https://svgbattle.andyfx.net/profile/${hashid}`}
       />
-      <main className="">
-        <div>user/profile page</div>
-        <p>{JSON.stringify(user)}</p>
-        <h1>{user.name}</h1>
+      <main className="container mx-auto flex min-h-screen justify-center p-4">
+        <div>
+          <h1>{user.name} profile</h1>
 
-        <h2>created battles</h2>
-        <ul className="">
-          {user.createdTargets.map((target) => (
-            <li key={target.id} className="border-b-2">
-              <Link href={`/b/${hashidFromNumber(target.id)}`}>{target.title}</Link>
-            </li>
-          ))}
-        </ul>
+          <h2>created battles</h2>
+          <ul className="">
+            {user.createdTargets.map((target) => (
+              <li key={target.id} className="border-b-2">
+                <Link
+                  className="decoration-dotted hover:text-neutral-500 hover:decoration-solid"
+                  href={`/b/${hashidFromNumber(target.id)}`}
+                >
+                  {target.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
 
-        <h2>completed battles</h2>
-        <ul className="">
-          {user.targetSubmissions.map((target) => (
-            <li key={target.targetId} className="border-b-2">
-              <Link href={`/b/${hashidFromNumber(target.targetId)}`}>{target.target.title}</Link>
-            </li>
-          ))}
-        </ul>
-        {user.targetSubmissions.length === 0 && <p>no battles completed</p>}
+          <h2>completed battles</h2>
+          <ul className="">
+            {user.targetSubmissions.map((target) => (
+              <li key={target.targetId} className="border-b-2">
+                <Link
+                  className="decoration-dotted hover:text-neutral-500 hover:decoration-solid"
+                  href={`/b/${hashidFromNumber(target.targetId)}`}
+                >
+                  {target.target.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          {user.targetSubmissions.length === 0 && <p>no battles completed</p>}
+        </div>
       </main>
     </>
   );
