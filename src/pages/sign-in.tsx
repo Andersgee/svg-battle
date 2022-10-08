@@ -53,7 +53,7 @@ const Page: NextPage<Props> = ({ providers }) => {
             <div key={provider.name}>
               <button
                 onClick={() => signIn(provider.id)}
-                className="hover:ease-infocus:bg-neutral-200 m-2 flex w-64 items-center justify-around bg-white p-3 font-medium text-black shadow-md transition duration-100 ease-out hover:bg-neutral-100"
+                className="m-2 flex w-64 items-center justify-around bg-white p-3 font-medium text-black shadow-md transition duration-100 ease-out hover:bg-neutral-100 hover:ease-in focus:bg-neutral-200"
               >
                 <Icon name={provider.name} className="mr-2 h-7" />
                 <span>Sign in with {provider.name}</span>

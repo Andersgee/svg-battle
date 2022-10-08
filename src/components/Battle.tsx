@@ -4,11 +4,14 @@ import { CanvasCode, CanvasDebug, CanvasTarget } from "./Canvas";
 import { CompareInfo } from "./CompareInfo";
 import { Editor } from "./Editor";
 
+const a = `<svg width="240px" height="240px" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg"></svg>`;
 const placeholderTarget = `<svg width="240px" height="240px" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
-<rect x="120" y="120" width="120" height="120" fill="#00c"/>
 <circle cx="120" cy="120" r="120" fill="#00c"/>
+<rect x="120" y="120" width="120" height="120" fill="#00c"/>
 </svg>
 `;
+
+//<svg width="240px" height="240px" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg"><circle cx="120" cy="120" r="120" fill="#f0c"/><rect x="120" y="120" width="120" height="120" fill="#00c"/></svg>
 
 type Props = {
   className?: string;

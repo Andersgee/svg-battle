@@ -81,9 +81,12 @@ function compareImageData(imageData: ImageData, targetImageData: ImageData) {
     //debugData[i + 1] = diffValue(targetImageData.data[i + 1], imageData.data[i + 1]);
     //debugData[i + 2] = diffValue(targetImageData.data[i + 2], imageData.data[i + 2]);
   }
-  const percentCorrect = Math.floor(100 * (correctPixelCount / Npixels));
-  console.log("correctPixelCount", correctPixelCount);
-  console.log("Npixels", Npixels);
+  //const percentCorrect = Math.floor(100 * (correctPixelCount / Npixels));
+  const fractionCorrect = correctPixelCount / Npixels;
+  const percentCorrect = fractionCorrect > 0.999 ? 100 : Math.floor(100 * fractionCorrect);
+
+  //console.log("correctPixelCount", correctPixelCount);
+  //console.log("Npixels", Npixels);
   const debugImageData = new ImageData(debugData, imageData.width, imageData.height);
   return {
     percentCorrect,

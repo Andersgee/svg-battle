@@ -75,16 +75,17 @@ export function Editor() {
           mounted ? "language-svg" : ""
         } relative overflow-hidden whitespace-pre-wrap bg-white shadow-md dark:bg-black`}
       >
-        {/* type in <textarea> but show the actual (highlighted) text in <code>*/}
+        {/* type in <textarea> but show the actual highlighted text in <code>*/}
         <textarea
           id={textareaId}
           ref={textareaRef}
-          spellCheck={false}
-          autoComplete="off"
-          className={`h-[${MIN_HEIGHT}px] min-h-[${MIN_HEIGHT}px] w-full resize-none bg-transparent text-transparent no-underline caret-black dark:caret-white`}
+          value={code}
           onChange={(e) => {
             setCode(e.target.value);
           }}
+          spellCheck={false}
+          autoComplete="off"
+          className={`h-[${MIN_HEIGHT}px] min-h-[${MIN_HEIGHT}px] w-full resize-none bg-transparent text-transparent no-underline caret-black dark:caret-white`}
           onScroll={updateCodeSize}
         />
 

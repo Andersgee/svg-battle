@@ -42,14 +42,17 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
-    Target        Target[]
+    id                String             @id @default(cuid())
+    name              String?
+    email             String?            @unique
+    emailVerified     DateTime?
+    image             String?
+    accounts          Account[]
+    sessions          Session[]
+    //app
+    intId             Int                @unique @default(autoincrement()) //for hashid only
+    createdTargets    Target[]
+    targetSubmissions TargetSubmission[]
 }
 
 model VerificationToken {
@@ -62,12 +65,26 @@ model VerificationToken {
 
 //application
 model Target {
-    id        Int      @id @default(autoincrement())
-    createdAt DateTime @default(now())
-    user      User     @relation(fields: [userId], references: [id])
-    userId    String
-    title     String
-    svg       String
+    id          Int                @id @default(autoincrement())
+    createdAt   DateTime           @default(now())
+    creator     User               @relation(fields: [creatorId], references: [id])
+    creatorId   String
+    title       String
+    svg         String             @db.VarChar(10000)
+    submissions TargetSubmission[]
+}
+
+//relation tables https://www.prisma.io/docs/concepts/components/prisma-schema/relations/many-to-many-relations#relation-tables
+model TargetSubmission {
+    createdAt           DateTime @default(now())
+    sanitizedCode       String   @db.VarChar(10000)
+    sanitizedCodeLength Int
+    target              Target   @relation(fields: [targetId], references: [id])
+    targetId            Int
+    user                User     @relation(fields: [userId], references: [id])
+    userId              String
+
+    @@id([targetId, userId])
 }
 
 model Example {

@@ -1,6 +1,7 @@
 // @ts-check
 import { env } from "./src/env/server.mjs";
 import { withPlausibleProxy } from "next-plausible";
+import { withSuperjson } from "next-superjson";
 
 /**
  * Don't be scared of the generics here.
@@ -11,7 +12,7 @@ import { withPlausibleProxy } from "next-plausible";
  * @constraint {{import('next').NextConfig}}
  */
 function defineNextConfig(config) {
-  return withPlausibleProxy()(config);
+  return withPlausibleProxy()(withSuperjson()(config));
 }
 
 export default defineNextConfig({
