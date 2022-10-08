@@ -11,7 +11,7 @@ const placeholder = `<svg width="100px" height="100px" viewBox="0 0 100 100" xml
 `;
 
 //const placeholder = "";
-const MIN_HEIGHT = 300;
+const MIN_HEIGHT = 240;
 
 export function Editor() {
   const [mounted, setMounted] = useState(false);
@@ -66,7 +66,9 @@ export function Editor() {
 
   return (
     <div className="">
-      <label htmlFor={textareaId}>code editor</label>
+      <label htmlFor={textareaId}>
+        <h2>editor</h2>
+      </label>
       <pre
         tabIndex={-1}
         className={`${
@@ -79,7 +81,7 @@ export function Editor() {
           ref={textareaRef}
           spellCheck={false}
           autoComplete="off"
-          className={`min-h-[300px] w-full resize-none bg-transparent text-transparent no-underline caret-black dark:caret-white`}
+          className={`h-[${MIN_HEIGHT}px] min-h-[${MIN_HEIGHT}px] w-full resize-none bg-transparent text-transparent no-underline caret-black dark:caret-white`}
           onChange={(e) => {
             setCode(e.target.value);
           }}
@@ -96,8 +98,12 @@ export function Editor() {
           {code}
         </code>
       </pre>
+
       <div onMouseDown={onResizeMouseDown} className="flex cursor-ns-resize select-none justify-center">
-        <Draghandle className="fill-neutral-400  hover:fill-neutral-700 dark:fill-neutral-600 dark:hover:fill-neutral-400" />
+        <Draghandle
+          height={24}
+          className="w-full fill-neutral-400 hover:fill-neutral-700 dark:fill-neutral-600 dark:hover:fill-neutral-400"
+        />
       </div>
     </div>
   );

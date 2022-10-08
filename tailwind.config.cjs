@@ -3,6 +3,13 @@ module.exports = {
   darkMode: "class",
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    screens: {
+      "sm": "528px", //1:
+      "md": "784px", //2: 240*2 + 16*3
+      "lg": "1040px", //3: 240*3 + 16*4
+      "xl": "1280px",
+      "2xl": "1536px",
+    },
     extend: {
       keyframes: {
         strokedraw: {

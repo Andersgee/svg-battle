@@ -20,7 +20,6 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
-    //The redirect callback is called anytime the user is redirected to a callback URL (e.g. on signin or signout).
     redirect({ url, baseUrl }) {
       if (url.startsWith("/")) {
         // Allows relative callback URLs

@@ -14,7 +14,7 @@ const Home: NextPage = () => {
         domainUrl="https://svgbattle.andyfx.net"
         url="https://svgbattle.andyfx.net"
       />
-        <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
+      <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
         <h1 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[5rem]">
           Create <span className="text-purple-300">T3</span> App
         </h1>
@@ -40,7 +40,7 @@ function AuthShowcase() {
       {sessionData && <p className="text-2xl text-blue-500">Logged in as {sessionData?.user?.name}</p>}
       {secretMessage && <p className="text-2xl text-blue-500">{secretMessage}</p>}
       <button
-        className="rounded-md border border-black bg-violet-50 px-4 py-2 text-xl shadow-lg hover:bg-violet-100"
+        className="rounded-md border border-black bg-violet-50 px-4 py-2 text-xl shadow-md hover:bg-violet-100"
         onClick={sessionData ? () => signOut() : () => signIn()}
       >
         {sessionData ? "Sign out" : "Sign in"}

@@ -1,5 +1,6 @@
 import React, { useState, createContext, useContext, useEffect } from "react";
 import DOMPurify from "dompurify";
+import { useImageDataFromSvg } from "src/hooks/useImageData";
 
 /*
 const placeholder = `<rect x="24" y="24" width="10" height="10" fill="#00c"/>
@@ -14,10 +15,13 @@ const placeholder = `<svg width="100px" height="100px" viewBox="0 0 100 100" xml
 `;
 
 */
+//<circle cx="240" cy="240" r="240" fill="#00c"/>
+
 interface Props {
   code: string;
   setCode: React.Dispatch<React.SetStateAction<string>>;
   sanitizedCode: string;
+  imageData?: ImageData;
 }
 
 const defaultValue: Props = {
@@ -32,15 +36,17 @@ interface ProviderProps {
   children: React.ReactNode;
 }
 
+const WIDTH = 240;
+const HEIGHT = 240;
+
 export function CodeProvider({ children }: ProviderProps) {
   const [code, setCode] = useState("");
   const [sanitizedCode, setSanitizedCode] = useState("");
+  const imageData = useImageDataFromSvg(sanitizedCode, WIDTH, HEIGHT);
 
   useEffect(() => {
-    const width = 96;
-    const height = 96;
     const clean = sanitize(
-      `<svg width="${width}px" height="${height}px" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">${code}</svg>`,
+      `<svg width="${WIDTH}px" height="${HEIGHT}px" viewBox="0 0 ${WIDTH} ${HEIGHT}" xmlns="http://www.w3.org/2000/svg">${code}</svg>`,
     );
     //console.log("clean:", clean);
     if (clean) {
@@ -54,6 +60,7 @@ export function CodeProvider({ children }: ProviderProps) {
         code,
         setCode,
         sanitizedCode,
+        imageData,
       }}
     >
       {children}

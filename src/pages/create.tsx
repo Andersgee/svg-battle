@@ -18,12 +18,22 @@ const Page: NextPage = () => {
       <ThemeToggleButton />
       <main className="">
         <div>here is the create page</div>
-        <div className="m-4 grid grid-cols-3 gap-4">
-          <div className="col-span-2 h-11">
-            <Editor />
+        <div
+          className="grid grid-cols-1 place-items-center items-start p-4
+          sm:grid-cols-2  
+          lg:flex lg:gap-4"
+        >
+          <div className="sm:order-2 lg:order-3">
+            <h2>create</h2>
+            <div className="w-[240px]">create button</div>
           </div>
-          <div className="col-span-1">
+          <div className="sm:order-1 lg:order-2">
+            <h2>output</h2>
             <CanvasCode />
+          </div>
+
+          <div className="w-full sm:order-3 sm:col-span-2 lg:order-1">
+            <Editor />
           </div>
         </div>
       </main>

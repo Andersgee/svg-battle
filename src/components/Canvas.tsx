@@ -1,18 +1,31 @@
 import { useRef } from "react";
 import { useCodeContext } from "src/contexts/Code";
-import { useImageDataFromSvg } from "src/hooks/useImageDataFromSvg";
-import { usePutImageData } from "src/hooks/usePutImageData";
+import { useTargetContext } from "src/contexts/Target";
+import { useCompareOutputTarget, usePutImageData } from "src/hooks/useImageData";
 
-type Props = {
-  className?: string;
-};
+//const canvasStyle = "outline- block h-[240px] w-[240px] outline outline-1 outline-neutral-300 dark:outline-neutral-700";
+const canvasStyle = "outline- block h-[240px] w-[240px]";
 
-export function CanvasCode({ className }: Props) {
-  const { sanitizedCode } = useCodeContext();
+export function CanvasCode() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { imageData } = useCodeContext();
+  usePutImageData(canvasRef, imageData);
+
+  return <canvas ref={canvasRef} className={canvasStyle} />;
+}
+
+export function CanvasTarget() {
   const codeCanvasRef = useRef<HTMLCanvasElement>(null);
-
-  const imageData = useImageDataFromSvg(sanitizedCode, 96, 96);
+  const { imageData } = useTargetContext();
   usePutImageData(codeCanvasRef, imageData);
 
-  return <canvas ref={codeCanvasRef} className={className} />;
+  return <canvas ref={codeCanvasRef} className={canvasStyle} />;
+}
+
+export function CanvasDebug() {
+  const codeCanvasRef = useRef<HTMLCanvasElement>(null);
+  const { imageData } = useCompareOutputTarget();
+  usePutImageData(codeCanvasRef, imageData);
+
+  return <canvas ref={codeCanvasRef} className={canvasStyle} />;
 }
