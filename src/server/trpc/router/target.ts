@@ -18,6 +18,33 @@ export const targetRouter = t.router({
         },
       });
     }),
+  submit: authedProcedure
+    .input(
+      z.object({
+        targetId: z.number(),
+        sanitizedCode: z.string().min(98),
+      }),
+    )
+    .mutation(({ input, ctx }) => {
+      return ctx.prisma.targetSubmission.upsert({
+        where: {
+          targetId_userId: {
+            userId: ctx.session.user.id,
+            targetId: input.targetId,
+          },
+        },
+        update: {
+          sanitizedCode: input.sanitizedCode,
+          sanitizedCodeLength: input.sanitizedCode.length,
+        },
+        create: {
+          sanitizedCode: input.sanitizedCode,
+          sanitizedCodeLength: input.sanitizedCode.length,
+          targetId: input.targetId,
+          userId: ctx.session.user.id,
+        },
+      });
+    }),
   getAll: t.procedure.query(({ ctx }) => {
     return ctx.prisma.target.findMany();
   }),

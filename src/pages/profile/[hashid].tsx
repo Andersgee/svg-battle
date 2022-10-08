@@ -58,6 +58,7 @@ const Page: NextPage<Props> = ({ user, hashid }) => {
                 >
                   {target.target.title}
                 </Link>
+                in {target.sanitizedCodeLength} chars
               </li>
             ))}
           </ul>
@@ -111,6 +112,7 @@ async function getUser(id: number) {
     include: {
       targetSubmissions: {
         select: {
+          sanitizedCodeLength: true,
           targetId: true,
           createdAt: true,
           target: {

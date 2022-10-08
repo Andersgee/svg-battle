@@ -60,6 +60,9 @@ function CreateTargetButton() {
   const onClick = () => {
     if (title && sanitizedCode) {
       targetMutation.mutate({ title: title, svg: sanitizedCode });
+
+      //const battleHref = `/b/${hashidFromNumber(res.targetId)}`
+      //router.prefetch(battleHref)
     }
   };
 

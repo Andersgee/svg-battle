@@ -34,7 +34,7 @@ const Page: NextPage<Props> = ({ target, hashid }) => {
           url={`https://svgbattle.andyfx.net/b/${hashid}`}
         />
         <main className="">
-          <Battle svg={target.svg} />
+          <Battle svg={target.svg} targetId={target.id} />
         </main>
       </TargetProvider>
     </CodeProvider>
