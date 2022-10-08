@@ -8,11 +8,11 @@ import { numberFromHashid } from "src/utils/hashids";
 import { stringFromParam } from "src/utils/param";
 
 type Props = {
-  target: Target;
+  user: User;
   hashid: string;
 };
 
-const Page: NextPage<Props> = ({ target, hashid }) => {
+const Page: NextPage<Props> = ({ user, hashid }) => {
   const router = useRouter();
 
   if (router.isFallback) {
@@ -24,14 +24,14 @@ const Page: NextPage<Props> = ({ target, hashid }) => {
   return (
     <>
       <Head
-        title={`${target.title} | battle | svg battle`}
-        description={`Svg battle - ${target.title} by ${target.creator.name}.`}
+        title={`${user.name} | profile | svg battle`}
+        description={`Svg battle - user profile and battles by ${user.name}.`}
         domainUrl="https://svgbattle.andyfx.net"
-        url={`https://svgbattle.andyfx.net/b/${hashid}`}
+        url={`https://svgbattle.andyfx.net/profile/${hashid}`}
       />
       <main className="">
-        <div>target/battle page</div>
-        <div>{JSON.stringify(target)}</div>
+        <div>user/profile page</div>
+        <div>{JSON.stringify(user)}</div>
       </main>
     </>
   );
@@ -55,10 +55,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const id = numberFromHashid(hashid);
     if (!id) return { notFound: true };
 
-    const target = await getTarget(id);
-    if (!target) return { notFound: true };
+    const user = await getUser(id);
+    if (!user) return { notFound: true };
 
-    const props: Props = { target, hashid };
+    const props: Props = { user, hashid };
     return {
       props,
       revalidate: 10, //at most once every 10 seconds
@@ -72,24 +72,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 //////////////////////////
 // utils
 
-type Target = NonNullable<inferAsyncReturnType<typeof getTarget>>;
+type User = NonNullable<inferAsyncReturnType<typeof getUser>>;
 
-async function getTarget(id: number) {
-  return prisma.target.findUnique({
-    where: { id },
+async function getUser(id: number) {
+  return prisma.user.findUnique({
+    where: { intId: id },
     include: {
-      submissions: {
-        select: {
-          userId: true,
-          sanitizedCodeLength: true,
-        },
-      },
-      creator: {
-        select: {
-          name: true,
-          intId: true,
-        },
-      },
+      targetSubmissions: true,
     },
   });
 }

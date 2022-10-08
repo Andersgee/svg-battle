@@ -16,8 +16,14 @@ const Home: NextPage = () => {
         domainUrl="https://svgbattle.andyfx.net"
         url="https://svgbattle.andyfx.net"
       />
-      <Link href={`/b/${hashidFromNumber(0)}`}>battle 0</Link>
-      <Link href={`/b/${hashidFromNumber(1)}`}>battle 1</Link>
+      <div>
+        <Link href={`/b/${hashidFromNumber(0)}`}>battle 0</Link>
+        <Link href={`/b/${hashidFromNumber(1)}`}>battle 1</Link>
+      </div>
+      <div>
+        <Link href={`/profile/${hashidFromNumber(0)}`}>user 0</Link>
+        <Link href={`/profile/${hashidFromNumber(1)}`}>user 1</Link>
+      </div>
       <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
         <h1 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[5rem]">
           Create <span className="text-purple-300">T3</span> App
