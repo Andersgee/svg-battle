@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { SignInButtons } from "./SignInButtons";
 
 type Props = {
@@ -8,8 +9,8 @@ type Props = {
 export function SigninDialog({ open = false, className }: Props) {
   if (open) {
     return (
-      <div className="absolute top-12 right-0 bg-neutral-50">
-        <SignInButtons />
+      <div className="absolute top-12 right-0 bg-neutral-50 shadow-md  ">
+        <SignInButtons className="p-4" />
       </div>
     );
   }

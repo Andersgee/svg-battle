@@ -1,4 +1,5 @@
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 
 /** response from  http://localhost:3000/api/auth/providers */
 const providers = {
@@ -29,20 +30,40 @@ type Props = {
   className?: string;
 };
 
+/**
+ *
+ * Keep same look (light mode) always.
+ */
 export function SignInButtons({ className }: Props) {
   return (
-    <div className="bg-neutral-50 py-2 px-4">
+    <div className={className}>
       {Object.values(providers).map((provider) => (
         <div key={provider.name}>
           <button
             onClick={() => signIn(provider.id)}
-            className="my-2 flex w-64 items-center justify-around bg-white p-3 font-medium text-black shadow-md transition duration-100 ease-out hover:bg-neutral-100 hover:ease-in focus:bg-neutral-200"
+            className="mb-4 flex w-64 items-center justify-around bg-white p-3 font-medium text-black shadow-md transition duration-100 ease-out hover:bg-neutral-100 hover:ease-in focus:bg-neutral-200"
           >
             <Icon name={provider.name} className="mr-2 h-7" />
             <span>Sign in with {provider.name}</span>
           </button>
         </div>
       ))}
+      <p className="mt-3 w-64 text-center text-sm text-neutral-600 dark:text-neutral-600">
+        By signing in, you agree to our <br />
+        <Link
+          className="text-neutral-600 hover:text-neutral-500 dark:text-neutral-600 dark:hover:text-neutral-500"
+          href="/terms"
+        >
+          Terms of Service
+        </Link>{" "}
+        and{" "}
+        <Link
+          className="text-neutral-600 hover:text-neutral-500 dark:text-neutral-600 dark:hover:text-neutral-500"
+          href="/privacy"
+        >
+          Privacy Policy
+        </Link>
+      </p>
     </div>
   );
 }
