@@ -1,5 +1,6 @@
 import { t, authedProcedure } from "../trpc";
 import { z } from "zod";
+import { colorValuesString, tagNamesString } from "src/utils/svgmetaparse";
 
 export const targetRouter = t.router({
   create: authedProcedure
@@ -15,6 +16,8 @@ export const targetRouter = t.router({
           creatorId: ctx.session.user.id,
           title: input.title,
           svg: input.svg,
+          svgColorValues: colorValuesString(input.svg),
+          svgTagNames: tagNamesString(input.svg),
         },
       });
     }),

@@ -65,13 +65,15 @@ model VerificationToken {
 
 //application
 model Target {
-    id          Int                @id @default(autoincrement())
-    createdAt   DateTime           @default(now())
-    creator     User               @relation(fields: [creatorId], references: [id])
-    creatorId   String
-    title       String
-    svg         String             @db.VarChar(10000)
-    submissions TargetSubmission[]
+    id             Int                @id @default(autoincrement())
+    createdAt      DateTime           @default(now())
+    creator        User               @relation(fields: [creatorId], references: [id])
+    creatorId      String
+    title          String
+    svg            String             @db.VarChar(10000)
+    submissions    TargetSubmission[]
+    svgColorValues String             @db.VarChar(1000)
+    svgTagNames    String             @db.VarChar(1000)
 }
 
 //relation tables https://www.prisma.io/docs/concepts/components/prisma-schema/relations/many-to-many-relations#relation-tables

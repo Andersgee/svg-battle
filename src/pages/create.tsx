@@ -1,15 +1,18 @@
 import type { NextPage } from "next";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { useId, useState } from "react";
 import { CanvasCode } from "src/components/Canvas";
 import { Editor } from "src/components/Editor";
 import { Head } from "src/components/Head";
 import { ThemeToggleButton } from "src/components/ThemeToggleButton";
 import { CodeProvider, useCodeContext } from "src/contexts/Code";
+import { hashidFromNumber } from "src/utils/hashids";
 import { trpc } from "src/utils/trpc";
 //import { trpc } from "../utils/trpc";
 
 const Page: NextPage = () => {
-  const targetQuery = trpc.target.getAll.useQuery(undefined, { refetchOnWindowFocus: false });
+  //const targetQuery = trpc.target.getAll.useQuery(undefined, { refetchOnWindowFocus: false });
   return (
     <CodeProvider>
       <Head
@@ -20,8 +23,6 @@ const Page: NextPage = () => {
       />
       <ThemeToggleButton />
       <main className="">
-        <div>{JSON.stringify(targetQuery.data)}</div>
-        <div>here is the create page</div>
         <div
           className="grid grid-cols-1 place-items-center items-start p-4
           sm:grid-cols-2  
@@ -50,19 +51,21 @@ const Page: NextPage = () => {
 export default Page;
 
 function CreateTargetButton() {
+  const router = useRouter();
   const inputId = useId();
   const [title, setTitle] = useState("");
   const { sanitizedCode } = useCodeContext();
   const targetMutation = trpc.target.create.useMutation();
+  const [battleHref, setBattleHref] = useState("");
 
   //const vote = trpc.useMutation(["vote.create"]);
 
-  const onClick = () => {
+  const onClick = async () => {
     if (title && sanitizedCode) {
-      targetMutation.mutate({ title: title, svg: sanitizedCode });
-
-      //const battleHref = `/b/${hashidFromNumber(res.targetId)}`
-      //router.prefetch(battleHref)
+      const res = await targetMutation.mutateAsync({ title: title, svg: sanitizedCode });
+      const href = `/b/${hashidFromNumber(res.id)}`;
+      router.prefetch(href);
+      setBattleHref(href);
     }
   };
 
@@ -72,7 +75,6 @@ function CreateTargetButton() {
         <label htmlFor={inputId} className="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300">
           Title
         </label>
-
         <input
           onChange={(e) => setTitle(e.target.value)}
           type="text"
@@ -98,6 +100,16 @@ function CreateTargetButton() {
         >
           CREATE
         </button>
+        <div>
+          {battleHref && (
+            <Link
+              className="underline decoration-dotted hover:text-neutral-500 hover:decoration-solid dark:hover:text-neutral-300"
+              href={battleHref}
+            >
+              go to created battle
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );

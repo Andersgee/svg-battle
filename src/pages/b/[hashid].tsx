@@ -1,5 +1,6 @@
 import { inferAsyncReturnType } from "@trpc/server";
 import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { Battle } from "src/components/Battle";
 import { Head } from "src/components/Head";
@@ -7,7 +8,7 @@ import { CodeProvider } from "src/contexts/Code";
 import { TargetProvider } from "src/contexts/Target";
 //import { trpc } from "src/utils/trpc";
 import { prisma } from "src/server/db/client";
-import { numberFromHashid } from "src/utils/hashids";
+import { hashidFromNumber, numberFromHashid } from "src/utils/hashids";
 import { stringFromParam } from "src/utils/param";
 
 type Props = {
@@ -34,7 +35,18 @@ const Page: NextPage<Props> = ({ target, hashid }) => {
           url={`https://svgbattle.andyfx.net/b/${hashid}`}
         />
         <main className="">
-          <Battle svg={target.svg} targetId={target.id} />
+          <div className="">
+            <h1 className="text-center">
+              Battle - {target.title} by{" "}
+              <Link
+                className="underline decoration-dotted hover:text-neutral-500 hover:decoration-solid dark:hover:text-neutral-300"
+                href={`/profile/${hashidFromNumber(target.creator.intId)}`}
+              >
+                {target.creator.name}
+              </Link>
+            </h1>
+          </div>
+          <Battle target={target} />
         </main>
       </TargetProvider>
     </CodeProvider>
@@ -76,7 +88,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 //////////////////////////
 // utils
 
-type Target = NonNullable<inferAsyncReturnType<typeof getTarget>>;
+export type Target = NonNullable<inferAsyncReturnType<typeof getTarget>>;
 
 async function getTarget(id: number) {
   return prisma.target.findUnique({

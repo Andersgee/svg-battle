@@ -11,7 +11,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head
-        title="svg batle"
+        title="svg batlle"
         description="Battle others by drawing images with svg."
         domainUrl="https://svgbattle.andyfx.net"
         url="https://svgbattle.andyfx.net"

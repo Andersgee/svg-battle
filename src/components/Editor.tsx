@@ -109,34 +109,3 @@ export function Editor() {
     </div>
   );
 }
-
-/*
-const Textarea = styled.textarea`
-  ${style}
-  background-color: transparent;
-  background-color: ${(props) => props.theme.color.paper};
-  color: transparent;
-  caret-color: ${(props) => props.theme.color.text.primary};
-
-  resize: none; //use custom resizing instead
-
-  height: 300px;
-
-  &:focus {
-    outline: 1px solid ${(props) => props.theme.color.accent};
-    outline-offset: -1px;
-  }
-`;
-
-const StyledCode = styled.code`
-  ${style}
-
-  pointer-events: none;
-  position: absolute;
-
-  top: 0;
-  left: 0;
-  right: 0;
-`;
-
-*/

@@ -8,6 +8,7 @@ import { CanvasCode, CanvasDebug, CanvasTarget } from "./Canvas";
 import { CompareInfo } from "./CompareInfo";
 import { Editor } from "./Editor";
 
+import type { Target } from "src/pages/b/[hashid]";
 const a = `<svg width="240px" height="240px" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg"></svg>`;
 const placeholderTarget = `<svg width="240px" height="240px" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
 <circle cx="120" cy="120" r="120" fill="#00c"/>
@@ -19,15 +20,14 @@ const placeholderTarget = `<svg width="240px" height="240px" viewBox="0 0 240 24
 
 type Props = {
   className?: string;
-  targetId: number;
-  svg: string;
+  target: Target;
 };
 
-export function Battle({ className, svg, targetId }: Props) {
+export function Battle({ className, target }: Props) {
   const { setCode } = useTargetContext();
   useEffect(() => {
-    setCode(svg);
-  }, [svg]);
+    setCode(target.svg);
+  }, [target]);
 
   return (
     <div className={className}>
@@ -50,7 +50,20 @@ export function Battle({ className, svg, targetId }: Props) {
         <div className="w-full sm:order-3 sm:col-span-2 lg:order-1">
           <Editor />
         </div>
-        <SubmitCodeButton targetId={targetId} />
+      </div>
+      <div className="flex justify-around">
+        <SubmitCodeButton targetId={target.id} />
+        <div>
+          <h2>hints</h2>
+          <div>
+            <h3>colors:</h3>
+            <div>{target.svgColorValues}</div>
+          </div>
+          <div>
+            <h3>{`<tags>:`}</h3>
+            <div>{target.svgTagNames}</div>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -85,10 +98,6 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
   return (
     <div>
       <div className="">
-        <label htmlFor={inputId} className="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300">
-          Title
-        </label>
-
         <button
           disabled={targetMutation.isLoading || sanitizedCode.length < 98}
           onClick={onClick}
