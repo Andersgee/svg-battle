@@ -1,5 +1,9 @@
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRef } from "react";
+import { useDialogContext } from "src/contexts/Dialog";
+import useOnClickOutside from "src/hooks/useOnClickOutside";
+import { Person } from "src/icons/Person";
 
 /** response from  http://localhost:3000/api/auth/providers */
 const providers = {
@@ -26,7 +30,7 @@ const providers = {
   },
 };
 
-type Props = {
+type SignInButtonsProps = {
   className?: string;
 };
 
@@ -34,7 +38,7 @@ type Props = {
  *
  * Keep same look (light mode) always.
  */
-export function SignInButtons({ className }: Props) {
+export function SignInButtons({ className }: SignInButtonsProps) {
   return (
     <div className={className}>
       {Object.values(providers).map((provider) => (
@@ -125,4 +129,39 @@ function Icon({ name, className }: IconProps) {
   } else {
     return <div>hm</div>;
   }
+}
+
+type SigninDialog = {
+  open: boolean;
+};
+
+export function SigninDialog({ open = false }: SigninDialog) {
+  if (open) {
+    return (
+      <div className="absolute top-12 right-0 bg-neutral-50 shadow-md  ">
+        <SignInButtons className="p-4" />
+      </div>
+    );
+  }
+
+  return <></>;
+}
+
+type ProfileButtonProps = {
+  className?: string;
+};
+
+export function ProfileButton({ className }: ProfileButtonProps) {
+  const { showSignIn, setShowSignIn } = useDialogContext();
+  const ref = useRef<HTMLDivElement>(null);
+  useOnClickOutside(ref, () => setShowSignIn(false));
+
+  return (
+    <div ref={ref} className={className}>
+      <button onClick={() => setShowSignIn((prev) => !prev)} aria-label="profile">
+        <Person className="w-full fill-neutral-400 hover:fill-neutral-700 dark:fill-neutral-600 dark:hover:fill-neutral-400" />
+      </button>
+      <SigninDialog open={showSignIn} />
+    </div>
+  );
 }

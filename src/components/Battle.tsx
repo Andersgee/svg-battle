@@ -1,24 +1,12 @@
-import { useRouter } from "next/router";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useState } from "react";
 import { useCodeContext } from "src/contexts/Code";
 import { useTargetContext } from "src/contexts/Target";
-import { hashidFromNumber } from "src/utils/hashids";
 import { trpc } from "src/utils/trpc";
-import { CanvasCode, CanvasDebug, CanvasTarget } from "./Canvas";
-import { CompareInfo } from "./CompareInfo";
+import { CanvasCode, CanvasTarget } from "./Canvas";
 import { Editor } from "./Editor";
-
 import type { Target } from "src/pages/b/[hashid]";
 import { useCompareOutputTarget } from "src/hooks/useImageData";
-import { SignInButtons } from "./SignInButtons";
-import { SigninDialog } from "./SigninDialog";
 import { useDialogContext } from "src/contexts/Dialog";
-const a = `<svg width="240px" height="240px" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg"></svg>`;
-const placeholderTarget = `<svg width="240px" height="240px" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
-<circle cx="120" cy="120" r="120" fill="#00c"/>
-<rect x="120" y="120" width="120" height="120" fill="#00c"/>
-</svg>
-`;
 
 //<svg width="240px" height="240px" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg"><circle cx="120" cy="120" r="120" fill="#f0c"/><rect x="120" y="120" width="120" height="120" fill="#00c"/></svg>
 
@@ -31,6 +19,7 @@ export function Battle({ className, target }: Props) {
   const { setCode } = useTargetContext();
   useEffect(() => {
     setCode(target.svg);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [target]);
 
   return (
@@ -107,7 +96,7 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
     setError(false);
     if (sanitizedCode) {
       try {
-        const res = await targetMutation.mutateAsync({
+        await targetMutation.mutateAsync({
           targetId,
           sanitizedCode,
           codeLength,
@@ -149,4 +138,13 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
       </div>
     </>
   );
+}
+
+type CompareInfoProps = {
+  className?: string;
+};
+
+export function CompareInfo({ className }: CompareInfoProps) {
+  const { percent } = useCompareOutputTarget();
+  return <h2 className={className}>output ({percent}% correct)</h2>;
 }
