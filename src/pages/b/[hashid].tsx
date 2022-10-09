@@ -39,7 +39,7 @@ const Page: NextPage<Props> = ({ target, hashid }) => {
         <main className="">
           <div className="">
             <h1 className="text-center">
-              Battle - {target.title} by{" "}
+              {target.title} by{" "}
               <Link href={`/profile/${hashidFromNumber(target.creator.intId)}`}>{target.creator.name}</Link>
             </h1>
           </div>
@@ -94,7 +94,7 @@ async function getTarget(id: number) {
       submissions: {
         select: {
           userId: true,
-          sanitizedCodeLength: true,
+          codeLength: true,
         },
       },
       creator: {

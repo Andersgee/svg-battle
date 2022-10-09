@@ -58,7 +58,7 @@ const Page: NextPage<Props> = ({ user, hashid }) => {
             {user.targetSubmissions.map((target) => (
               <li key={target.targetId} className="border-b-2">
                 <Link href={`/b/${hashidFromNumber(target.targetId)}`}>{target.target.title}</Link> in{" "}
-                {target.sanitizedCodeLength} chars
+                {target.codeLength} chars
               </li>
             ))}
           </ul>
@@ -112,7 +112,7 @@ async function getUser(id: number) {
     include: {
       targetSubmissions: {
         select: {
-          sanitizedCodeLength: true,
+          codeLength: true,
           targetId: true,
           createdAt: true,
           target: {

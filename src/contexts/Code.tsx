@@ -95,7 +95,7 @@ export function sanitize(dirty: string) {
       KEEP_CONTENT: false,
     });
 
-    return str;
+    return str.replaceAll("\n", "");
   } catch (err) {
     console.log(err);
     return "";

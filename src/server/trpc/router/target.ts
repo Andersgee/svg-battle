@@ -26,6 +26,7 @@ export const targetRouter = t.router({
       z.object({
         targetId: z.number(),
         sanitizedCode: z.string().min(98),
+        codeLength: z.number(),
       }),
     )
     .mutation(({ input, ctx }) => {
@@ -38,11 +39,11 @@ export const targetRouter = t.router({
         },
         update: {
           sanitizedCode: input.sanitizedCode,
-          sanitizedCodeLength: input.sanitizedCode.length,
+          codeLength: input.codeLength,
         },
         create: {
           sanitizedCode: input.sanitizedCode,
-          sanitizedCodeLength: input.sanitizedCode.length,
+          codeLength: input.codeLength,
           targetId: input.targetId,
           userId: ctx.session.user.id,
         },

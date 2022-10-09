@@ -11,7 +11,7 @@ export function colorValuesString(svg: string) {
  */
 export function tagNamesString(svg: string) {
   const list = tagNames(svg);
-  return list.join(" ");
+  return list.filter((str) => str !== "svg").join(" ");
 }
 
 ///////////////////
