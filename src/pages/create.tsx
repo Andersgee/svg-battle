@@ -6,7 +6,6 @@ import { CanvasCode } from "src/components/Canvas";
 import { Editor } from "src/components/Editor";
 import { Head } from "src/components/Head";
 import { Nav } from "src/components/Nav";
-import { ThemeToggleButton } from "src/components/ThemeToggleButton";
 import { CodeProvider, useCodeContext } from "src/contexts/Code";
 import { hashidFromNumber } from "src/utils/hashids";
 import { trpc } from "src/utils/trpc";

@@ -10,6 +10,9 @@ import { Editor } from "./Editor";
 
 import type { Target } from "src/pages/b/[hashid]";
 import { useCompareOutputTarget } from "src/hooks/useImageData";
+import { SignInButtons } from "./SignInButtons";
+import { SigninDialog } from "./SigninDialog";
+import { useDialogContext } from "src/contexts/Dialog";
 const a = `<svg width="240px" height="240px" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg"></svg>`;
 const placeholderTarget = `<svg width="240px" height="240px" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
 <circle cx="120" cy="120" r="120" fill="#00c"/>
@@ -86,6 +89,7 @@ type SubmitCodeButtonProps = {
 function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
   const { sanitizedCode, code } = useCodeContext();
   const { percent } = useCompareOutputTarget();
+  const { setShowSignIn } = useDialogContext();
 
   const targetMutation = trpc.target.submit.useMutation();
   const [saved, setSaved] = useState(false);
@@ -111,35 +115,38 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
         setSaved(true);
       } catch (error) {
         setError(true);
+        setShowSignIn(true);
       }
     }
   };
 
   return (
-    <div>
-      <div className="">
-        {percent < 100 && <div>need 100% correct to submit</div>}
-        <button
-          disabled={targetMutation.isLoading || percent < 100}
-          onClick={onClick}
-          className="my-2 rounded-md bg-indigo-600 px-4
+    <>
+      <div>
+        <div className="">
+          {percent < 100 && <div>need 100% correct to submit</div>}
+          <button
+            disabled={targetMutation.isLoading || percent < 100}
+            onClick={onClick}
+            className="my-2 rounded-md bg-indigo-600 px-4
           py-3 text-center font-semibold text-white shadow-md
           transition duration-100 ease-out hover:bg-indigo-500 
           hover:ease-in focus:bg-indigo-500 disabled:bg-neutral-300 
           disabled:text-neutral-500
           "
-        >
-          SUBMIT
-        </button>
-        {saved && (
-          <>
-            <div className="text-green-500">Submitted!</div>
-            <div className="text-green-500">Your score: {codeLength} chars (newlines auto removed)</div>
-          </>
-        )}
-        {error && <div className="text-red-500">COULD NOT SUBMIT</div>}
+          >
+            SUBMIT
+          </button>
+          {saved && (
+            <>
+              <div className="text-green-500">Submitted!</div>
+              <div className="text-green-500">Your score: {codeLength} chars (newlines auto removed)</div>
+            </>
+          )}
+          {error && <div className="text-red-500">Must be signed in</div>}
+        </div>
+        <div>{percent}</div>
       </div>
-      <div>{percent}</div>
-    </div>
+    </>
   );
 }

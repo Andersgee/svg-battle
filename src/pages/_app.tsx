@@ -6,13 +6,16 @@ import type { AppType } from "next/app";
 import { trpc } from "../utils/trpc";
 import { ThemeProvider } from "next-themes";
 import PlausibleProvider from "next-plausible";
+import { DialogProvider } from "src/contexts/Dialog";
 
 const MyApp: AppType<{ session: Session | null }> = ({ Component, pageProps: { session, ...pageProps } }) => {
   return (
     <PlausibleProvider domain="svgbattle.andyfx.net">
       <ThemeProvider attribute="class">
         <SessionProvider session={session}>
-          <Component {...pageProps} />
+          <DialogProvider>
+            <Component {...pageProps} />
+          </DialogProvider>
         </SessionProvider>
       </ThemeProvider>
     </PlausibleProvider>
