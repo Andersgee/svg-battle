@@ -79,21 +79,14 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
   const { sanitizedCode, code } = useCodeContext();
   const { percent } = useCompareOutputTarget();
   const { setShowSignIn } = useDialogContext();
-
   const targetMutation = trpc.target.submit.useMutation();
-  const [saved, setSaved] = useState(false);
-  const [error, setError] = useState(false);
-
   const [codeLength, setCodeLength] = useState(0);
+
   useEffect(() => {
     setCodeLength(code.replaceAll("\n", "").length);
   }, [code]);
 
-  //const vote = trpc.useMutation(["vote.create"]);
-
   const onClick = async () => {
-    setSaved(false);
-    setError(false);
     if (sanitizedCode) {
       try {
         await targetMutation.mutateAsync({
@@ -101,42 +94,34 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
           sanitizedCode,
           codeLength,
         });
-        setSaved(true);
       } catch (error) {
-        setError(true);
         setShowSignIn(true);
       }
     }
   };
 
   return (
-    <>
-      <div>
-        <div className="">
-          {percent < 100 && <div>need 100% correct to submit</div>}
-          <button
-            disabled={targetMutation.isLoading || percent < 100}
-            onClick={onClick}
-            className="my-2 rounded-md bg-indigo-600 px-4
+    <div className="">
+      <button
+        disabled={targetMutation.isLoading || percent < 100}
+        onClick={onClick}
+        className="my-2 rounded-md bg-indigo-600 px-4
           py-3 text-center font-semibold text-white shadow-md
           transition duration-100 ease-out hover:bg-indigo-500 
           hover:ease-in focus:bg-indigo-500 disabled:bg-neutral-300 
           disabled:text-neutral-500
           "
-          >
-            SUBMIT
-          </button>
-          {saved && (
-            <>
-              <div className="text-green-500">Submitted!</div>
-              <div className="text-green-500">Your score: {codeLength} chars (newlines auto removed)</div>
-            </>
-          )}
-          {error && <div className="text-red-500">Must be signed in</div>}
-        </div>
-        <div>{percent}</div>
-      </div>
-    </>
+      >
+        SUBMIT
+      </button>
+      {targetMutation.data && (
+        <>
+          <div className="text-green-500">Submitted!</div>
+          <div className="text-green-500">Your score: {codeLength} chars (newlines auto removed)</div>
+        </>
+      )}
+      {targetMutation.error && <div className="text-red-500">Must be signed in</div>}
+    </div>
   );
 }
 

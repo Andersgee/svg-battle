@@ -57,21 +57,16 @@ function CreateTargetButton() {
   const [title, setTitle] = useState("");
   const { sanitizedCode } = useCodeContext();
   const targetMutation = trpc.target.create.useMutation();
-  const [battleHref, setBattleHref] = useState("");
-  const [error, setError] = useState(false);
   const { setShowSignIn } = useDialogContext();
-
-  //const vote = trpc.useMutation(["vote.create"]);
 
   const onClick = async () => {
     if (title && sanitizedCode) {
       try {
         const res = await targetMutation.mutateAsync({ title: title, svg: sanitizedCode });
+        //ping the created battle for static generation before its clicked
         const href = `/b/${hashidFromNumber(res.id)}`;
         router.prefetch(href);
-        setBattleHref(href);
       } catch (error) {
-        setError(true);
         setShowSignIn(true);
       }
     }
@@ -108,14 +103,14 @@ function CreateTargetButton() {
         >
           CREATE
         </button>
-        {error && <div className="text-red-500">Must be signed in</div>}
+        {targetMutation.error && <div className="text-red-500">Must be signed in</div>}
         <div>
-          {battleHref && (
+          {targetMutation.data && (
             <Link
               className="underline decoration-dotted hover:text-neutral-500 hover:decoration-solid dark:hover:text-neutral-300"
-              href={battleHref}
+              href={`/b/${hashidFromNumber(targetMutation.data.id)}`}
             >
-              go to created battle
+              open battle {targetMutation.data.title}
             </Link>
           )}
         </div>
