@@ -12,11 +12,14 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/sign-in",
   },
-  // Include user.id on session
+
   callbacks: {
     session({ session, user }) {
+      //Include id and intId on session.user
+      //see types/next-auth.d.ts
       if (session.user) {
-        session.user.id = user.id;
+        session.user.id = user.id; //
+        session.user.intId = user.intId;
       }
       return session;
     },

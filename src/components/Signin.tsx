@@ -1,4 +1,4 @@
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRef } from "react";
 import { useDialogContext } from "src/contexts/Dialog";
@@ -131,15 +131,33 @@ function Icon({ name, className }: IconProps) {
   }
 }
 
-type SigninDialog = {
+type SigninDialogProps = {
   open: boolean;
 };
 
-export function SigninDialog({ open = false }: SigninDialog) {
+export function SigninDialog({ open = false }: SigninDialogProps) {
   if (open) {
     return (
       <div className="absolute top-12 right-0 border-2 bg-neutral-50 shadow-md ">
         <SignInButtons className="p-4" />
+      </div>
+    );
+  }
+
+  return <></>;
+}
+
+type ProfileDialogProps = {
+  open: boolean;
+  userName: string;
+  userIntId: number;
+};
+
+function ProfileDialog({ open = false, userName, userIntId }: ProfileDialogProps) {
+  if (open) {
+    return (
+      <div className="absolute top-12 right-0 border-2 bg-neutral-50 shadow-md ">
+        signed in as {userName} with intId: {userIntId}
       </div>
     );
   }
@@ -155,13 +173,18 @@ export function ProfileButton({ className }: ProfileButtonProps) {
   const { showSignIn, setShowSignIn } = useDialogContext();
   const ref = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, () => setShowSignIn(false));
+  const { data: sessionData } = useSession();
 
   return (
     <div ref={ref} className={className}>
       <button onClick={() => setShowSignIn((prev) => !prev)} aria-label="profile">
         <Person className="w-full fill-neutral-400 hover:fill-neutral-700 dark:fill-neutral-600 dark:hover:fill-neutral-400" />
       </button>
-      <SigninDialog open={showSignIn} />
+      {sessionData?.user?.name ? (
+        <ProfileDialog open={showSignIn} userName={sessionData.user.name} userIntId={sessionData.user.intId} />
+      ) : (
+        <SigninDialog open={showSignIn} />
+      )}
     </div>
   );
 }
