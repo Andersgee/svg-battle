@@ -7,7 +7,6 @@ import { Editor } from "./Editor";
 import type { Target } from "src/pages/b/[hashid]";
 import { useCompareOutputTarget } from "src/hooks/useImageData";
 import { useDialogContext } from "src/contexts/Dialog";
-import { useSession } from "next-auth/react";
 
 //<svg width="240px" height="240px" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg"><circle cx="120" cy="120" r="120" fill="#f0c"/><rect x="120" y="120" width="120" height="120" fill="#00c"/></svg>
 
@@ -82,8 +81,6 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
   const { setShowSignIn } = useDialogContext();
   const targetMutation = trpc.target.submit.useMutation();
   const [codeLength, setCodeLength] = useState(0);
-  const { data: sessionData } = useSession();
-  const [showWarning, setShowWarning] = useState(false);
 
   useEffect(() => {
     setCodeLength(code.replaceAll("\n", "").length);
@@ -92,16 +89,11 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
   const onClick = async () => {
     if (sanitizedCode) {
       try {
-        if (sessionData?.user) {
-          await targetMutation.mutateAsync({
-            targetId,
-            sanitizedCode,
-            codeLength,
-          });
-        } else {
-          setShowSignIn(true);
-          setShowWarning(true);
-        }
+        await targetMutation.mutateAsync({
+          targetId,
+          sanitizedCode,
+          codeLength,
+        });
       } catch (error) {
         setShowSignIn(true);
       }
@@ -128,7 +120,7 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
           <div className="text-green-500">Your score: {codeLength} chars (newlines auto removed)</div>
         </>
       )}
-      {(targetMutation.error || showWarning) && <div className="text-red-500">Must be signed in</div>}
+      {targetMutation.error && <div className="text-red-500">Must be signed in</div>}
     </div>
   );
 }

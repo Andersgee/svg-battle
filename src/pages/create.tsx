@@ -1,5 +1,4 @@
 import type { NextPage } from "next";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useId, useState } from "react";
@@ -59,21 +58,14 @@ function CreateTargetButton() {
   const { sanitizedCode } = useCodeContext();
   const targetMutation = trpc.target.create.useMutation();
   const { setShowSignIn } = useDialogContext();
-  const { data: sessionData } = useSession();
-  const [showWarning, setShowWarning] = useState(false);
 
   const onClick = async () => {
     if (title && sanitizedCode) {
       try {
-        if (sessionData?.user) {
-          const res = await targetMutation.mutateAsync({ title: title, svg: sanitizedCode });
-          //ping the created battle for static generation before its clicked
-          const href = `/b/${hashidFromNumber(res.id)}`;
-          router.prefetch(href);
-        } else {
-          setShowSignIn(true);
-          setShowWarning(true);
-        }
+        const res = await targetMutation.mutateAsync({ title: title, svg: sanitizedCode });
+        //ping the created battle for static generation before its clicked
+        const href = `/b/${hashidFromNumber(res.id)}`;
+        router.prefetch(href);
       } catch (error) {
         setShowSignIn(true);
       }
@@ -111,7 +103,7 @@ function CreateTargetButton() {
         >
           CREATE
         </button>
-        {(targetMutation.error || showWarning) && <div className="text-red-500">Must be signed in</div>}
+        {targetMutation.error && <div className="text-red-500">Must be signed in</div>}
         <div>
           {targetMutation.data && (
             <Link
