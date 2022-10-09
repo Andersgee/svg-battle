@@ -7,6 +7,7 @@ import { Editor } from "./Editor";
 import type { Target } from "src/pages/b/[hashid]";
 import { useCompareOutputTarget } from "src/hooks/useImageData";
 import { useDialogContext } from "src/contexts/Dialog";
+import { useSession } from "next-auth/react";
 
 //<svg width="240px" height="240px" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg"><circle cx="120" cy="120" r="120" fill="#f0c"/><rect x="120" y="120" width="120" height="120" fill="#00c"/></svg>
 
@@ -81,6 +82,8 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
   const { setShowSignIn } = useDialogContext();
   const targetMutation = trpc.target.submit.useMutation();
   const [codeLength, setCodeLength] = useState(0);
+  const { data: sessionData } = useSession();
+  const [showWarning, setShowWarning] = useState(false);
 
   useEffect(() => {
     setCodeLength(code.replaceAll("\n", "").length);
@@ -89,11 +92,16 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
   const onClick = async () => {
     if (sanitizedCode) {
       try {
-        await targetMutation.mutateAsync({
-          targetId,
-          sanitizedCode,
-          codeLength,
-        });
+        if (sessionData?.user) {
+          await targetMutation.mutateAsync({
+            targetId,
+            sanitizedCode,
+            codeLength,
+          });
+        } else {
+          setShowSignIn(true);
+          setShowWarning(true);
+        }
       } catch (error) {
         setShowSignIn(true);
       }
@@ -106,10 +114,10 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
         disabled={targetMutation.isLoading || percent < 100}
         onClick={onClick}
         className="my-2 rounded-md bg-indigo-600 px-4
-          py-3 text-center font-semibold text-white shadow-md
-          transition duration-100 ease-out hover:bg-indigo-500 
-          hover:ease-in focus:bg-indigo-500 disabled:bg-neutral-300 
-          disabled:text-neutral-500
+          py-3 text-center font-semibold tracking-wider text-white
+          shadow-md transition duration-100 ease-out 
+          hover:bg-indigo-500 hover:ease-in focus:bg-indigo-500 
+          disabled:bg-neutral-300 disabled:text-neutral-500
           "
       >
         SUBMIT
@@ -120,7 +128,7 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
           <div className="text-green-500">Your score: {codeLength} chars (newlines auto removed)</div>
         </>
       )}
-      {targetMutation.error && <div className="text-red-500">Must be signed in</div>}
+      {(targetMutation.error || showWarning) && <div className="text-red-500">Must be signed in</div>}
     </div>
   );
 }

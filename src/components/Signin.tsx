@@ -47,7 +47,7 @@ export function SignInButtons({ className }: SignInButtonsProps) {
             onClick={() => signIn(provider.id)}
             className="mb-4 flex w-64 items-center justify-around bg-white p-3 font-medium text-black shadow-md transition duration-100 ease-out hover:bg-neutral-100 hover:ease-in focus:bg-neutral-200"
           >
-            <Icon name={provider.name} className="mr-2 h-7" />
+            <Icon name={provider.name} className="mr-1 h-7" />
             <span>Sign in with {provider.name}</span>
           </button>
         </div>
@@ -138,7 +138,7 @@ type SigninDialog = {
 export function SigninDialog({ open = false }: SigninDialog) {
   if (open) {
     return (
-      <div className="absolute top-12 right-0 bg-neutral-50 shadow-md  ">
+      <div className="absolute top-12 right-0 border-2 bg-neutral-50 shadow-md ">
         <SignInButtons className="p-4" />
       </div>
     );

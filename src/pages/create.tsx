@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useId, useState } from "react";
@@ -58,14 +59,21 @@ function CreateTargetButton() {
   const { sanitizedCode } = useCodeContext();
   const targetMutation = trpc.target.create.useMutation();
   const { setShowSignIn } = useDialogContext();
+  const { data: sessionData } = useSession();
+  const [showWarning, setShowWarning] = useState(false);
 
   const onClick = async () => {
     if (title && sanitizedCode) {
       try {
-        const res = await targetMutation.mutateAsync({ title: title, svg: sanitizedCode });
-        //ping the created battle for static generation before its clicked
-        const href = `/b/${hashidFromNumber(res.id)}`;
-        router.prefetch(href);
+        if (sessionData?.user) {
+          const res = await targetMutation.mutateAsync({ title: title, svg: sanitizedCode });
+          //ping the created battle for static generation before its clicked
+          const href = `/b/${hashidFromNumber(res.id)}`;
+          router.prefetch(href);
+        } else {
+          setShowSignIn(true);
+          setShowWarning(true);
+        }
       } catch (error) {
         setShowSignIn(true);
       }
@@ -95,15 +103,15 @@ function CreateTargetButton() {
           disabled={targetMutation.isLoading || title.length < 3 || sanitizedCode.length < 98}
           onClick={onClick}
           className="my-2 rounded-md bg-indigo-600 px-4
-          py-3 text-center font-semibold text-white shadow-md
-          transition duration-100 ease-out hover:bg-indigo-500 
-          hover:ease-in focus:bg-indigo-500 disabled:bg-neutral-300 
-          disabled:text-neutral-500
+          py-3 text-center font-semibold tracking-wider text-white
+          shadow-md transition duration-100 ease-out 
+          hover:bg-indigo-500 hover:ease-in focus:bg-indigo-500 
+          disabled:bg-neutral-300 disabled:text-neutral-500
           "
         >
           CREATE
         </button>
-        {targetMutation.error && <div className="text-red-500">Must be signed in</div>}
+        {(targetMutation.error || showWarning) && <div className="text-red-500">Must be signed in</div>}
         <div>
           {targetMutation.data && (
             <Link
