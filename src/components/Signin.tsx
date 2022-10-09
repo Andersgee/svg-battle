@@ -1,9 +1,10 @@
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRef } from "react";
 import { useDialogContext } from "src/contexts/Dialog";
 import useOnClickOutside from "src/hooks/useOnClickOutside";
 import { Person } from "src/icons/Person";
+import { hashidFromNumber } from "src/utils/hashids";
 
 /** response from  http://localhost:3000/api/auth/providers */
 const providers = {
@@ -149,7 +150,7 @@ export function SigninDialog({ open = false }: SigninDialogProps) {
 
 type ProfileDialogProps = {
   open: boolean;
-  userName: string;
+  userName?: string | null;
   userIntId: number;
 };
 
@@ -157,7 +158,14 @@ function ProfileDialog({ open = false, userName, userIntId }: ProfileDialogProps
   if (open) {
     return (
       <div className="absolute top-12 right-0 border-2 bg-neutral-50 shadow-md ">
-        signed in as {userName} with intId: {userIntId}
+        <div>
+          <p>
+            signed in as <Link href={`/profile/${hashidFromNumber(userIntId)}`}>{userName}</Link>
+          </p>
+          <div>
+            <button onClick={() => signOut()}>sign out</button>
+          </div>
+        </div>
       </div>
     );
   }
@@ -180,7 +188,7 @@ export function ProfileButton({ className }: ProfileButtonProps) {
       <button onClick={() => setShowSignIn((prev) => !prev)} aria-label="profile">
         <Person className="w-full fill-neutral-400 hover:fill-neutral-700 dark:fill-neutral-600 dark:hover:fill-neutral-400" />
       </button>
-      {sessionData?.user?.name ? (
+      {sessionData?.user ? (
         <ProfileDialog open={showSignIn} userName={sessionData.user.name} userIntId={sessionData.user.intId} />
       ) : (
         <SigninDialog open={showSignIn} />

@@ -47,5 +47,4 @@ so for my usecase:
 1. put intId and id on Session
 2. put intId on User (DefaultUser already has id)
 3. This obvisouly assumes we added an "intId Int" on the User model in prisma.schema
-
 */
