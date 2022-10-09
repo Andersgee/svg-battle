@@ -7,6 +7,7 @@ import { Editor } from "src/components/Editor";
 import { Head } from "src/components/Head";
 import { Nav } from "src/components/Nav";
 import { CodeProvider, useCodeContext } from "src/contexts/Code";
+import { useDialogContext } from "src/contexts/Dialog";
 import { hashidFromNumber } from "src/utils/hashids";
 import { trpc } from "src/utils/trpc";
 //import { trpc } from "../utils/trpc";
@@ -57,15 +58,22 @@ function CreateTargetButton() {
   const { sanitizedCode } = useCodeContext();
   const targetMutation = trpc.target.create.useMutation();
   const [battleHref, setBattleHref] = useState("");
+  const [error, setError] = useState(false);
+  const { setShowSignIn } = useDialogContext();
 
   //const vote = trpc.useMutation(["vote.create"]);
 
   const onClick = async () => {
     if (title && sanitizedCode) {
-      const res = await targetMutation.mutateAsync({ title: title, svg: sanitizedCode });
-      const href = `/b/${hashidFromNumber(res.id)}`;
-      router.prefetch(href);
-      setBattleHref(href);
+      try {
+        const res = await targetMutation.mutateAsync({ title: title, svg: sanitizedCode });
+        const href = `/b/${hashidFromNumber(res.id)}`;
+        router.prefetch(href);
+        setBattleHref(href);
+      } catch (error) {
+        setError(true);
+        setShowSignIn(true);
+      }
     }
   };
 
@@ -100,6 +108,7 @@ function CreateTargetButton() {
         >
           CREATE
         </button>
+        {error && <div className="text-red-500">Must be signed in</div>}
         <div>
           {battleHref && (
             <Link
