@@ -3,6 +3,7 @@ import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Head } from "src/components/Head";
+import { Nav } from "src/components/Nav";
 //import { trpc } from "src/utils/trpc";
 import { prisma } from "src/server/db/client";
 import { hashidFromNumber, numberFromHashid } from "src/utils/hashids";
@@ -30,20 +31,24 @@ const Page: NextPage<Props> = ({ user, hashid }) => {
         domainUrl="https://svgbattle.andyfx.net"
         url={`https://svgbattle.andyfx.net/profile/${hashid}`}
       />
+      <Nav />
       <main className="container mx-auto flex min-h-screen justify-center p-4">
         <div>
-          <h1>{user.name} profile</h1>
+          <div className="flex align-baseline">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={user.image!}
+              alt={user.name!}
+              className="mr-2 h-12 w-12 rounded-full shadow-imageborder  shadow-black dark:shadow-white"
+            />
+            <h1 className="text-4xl">{user.name}</h1>
+          </div>
 
           <h2>created battles</h2>
           <ul className="">
             {user.createdTargets.map((target) => (
               <li key={target.id} className="border-b-2">
-                <Link
-                  className="decoration-dotted hover:text-neutral-500 hover:decoration-solid"
-                  href={`/b/${hashidFromNumber(target.id)}`}
-                >
-                  {target.title}
-                </Link>
+                <Link href={`/b/${hashidFromNumber(target.id)}`}>{target.title}</Link>
               </li>
             ))}
           </ul>
@@ -52,13 +57,8 @@ const Page: NextPage<Props> = ({ user, hashid }) => {
           <ul className="">
             {user.targetSubmissions.map((target) => (
               <li key={target.targetId} className="border-b-2">
-                <Link
-                  className="decoration-dotted hover:text-neutral-500 hover:decoration-solid"
-                  href={`/b/${hashidFromNumber(target.targetId)}`}
-                >
-                  {target.target.title}
-                </Link>
-                in {target.sanitizedCodeLength} chars
+                <Link href={`/b/${hashidFromNumber(target.targetId)}`}>{target.target.title}</Link> in{" "}
+                {target.sanitizedCodeLength} chars
               </li>
             ))}
           </ul>

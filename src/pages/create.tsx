@@ -5,6 +5,7 @@ import { useId, useState } from "react";
 import { CanvasCode } from "src/components/Canvas";
 import { Editor } from "src/components/Editor";
 import { Head } from "src/components/Head";
+import { Nav } from "src/components/Nav";
 import { ThemeToggleButton } from "src/components/ThemeToggleButton";
 import { CodeProvider, useCodeContext } from "src/contexts/Code";
 import { hashidFromNumber } from "src/utils/hashids";
@@ -21,7 +22,7 @@ const Page: NextPage = () => {
         domainUrl="https://svgbattle.andyfx.net"
         url="https://svgbattle.andyfx.net"
       />
-      <ThemeToggleButton />
+      <Nav />
       <main className="">
         <div
           className="grid grid-cols-1 place-items-center items-start p-4

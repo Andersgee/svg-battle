@@ -4,6 +4,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { trpc } from "../utils/trpc";
 import Link from "next/link";
 import { hashidFromNumber } from "src/utils/hashids";
+import { Nav } from "src/components/Nav";
 
 const Home: NextPage = () => {
   const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
@@ -16,6 +17,7 @@ const Home: NextPage = () => {
         domainUrl="https://svgbattle.andyfx.net"
         url="https://svgbattle.andyfx.net"
       />
+      <Nav />
       <div>
         <Link href={`/b/${hashidFromNumber(0)}`}>battle 0</Link>
         <Link href={`/b/${hashidFromNumber(1)}`}>battle 1</Link>

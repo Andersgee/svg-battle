@@ -62,15 +62,8 @@ const Page: NextPage<Props> = ({ providers }) => {
           ))}
 
           <p className="mt-3 w-64 text-center text-sm">
-            By signing in, you agree to our{" "}
-            <Link href="/terms" className="underline decoration-dotted hover:decoration-solid">
-              Terms of Service
-            </Link>{" "}
-            and{" "}
-            <Link className="underline decoration-dotted hover:decoration-solid" href="/privacy">
-              Privacy Policy
-            </Link>
-            .
+            By signing in, you agree to our <br />
+            <Link href="/terms">Terms of Service</Link> and <Link href="/privacy">Privacy Policy</Link>
           </p>
           {error && <p className="text-red-600">something went wrong</p>}
           {error && <p className="text-red-600">error: {JSON.stringify(error)}</p>}

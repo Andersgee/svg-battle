@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Battle } from "src/components/Battle";
 import { Head } from "src/components/Head";
+import { Nav } from "src/components/Nav";
 import { CodeProvider } from "src/contexts/Code";
 import { TargetProvider } from "src/contexts/Target";
 //import { trpc } from "src/utils/trpc";
@@ -34,16 +35,12 @@ const Page: NextPage<Props> = ({ target, hashid }) => {
           domainUrl="https://svgbattle.andyfx.net"
           url={`https://svgbattle.andyfx.net/b/${hashid}`}
         />
+        <Nav />
         <main className="">
           <div className="">
             <h1 className="text-center">
               Battle - {target.title} by{" "}
-              <Link
-                className="underline decoration-dotted hover:text-neutral-500 hover:decoration-solid dark:hover:text-neutral-300"
-                href={`/profile/${hashidFromNumber(target.creator.intId)}`}
-              >
-                {target.creator.name}
-              </Link>
+              <Link href={`/profile/${hashidFromNumber(target.creator.intId)}`}>{target.creator.name}</Link>
             </h1>
           </div>
           <Battle target={target} />
