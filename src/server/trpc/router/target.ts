@@ -25,7 +25,7 @@ export const targetRouter = t.router({
     .input(
       z.object({
         targetId: z.number(),
-        sanitizedCode: z.string().min(98),
+        code: z.string().min(98),
         codeLength: z.number(),
       }),
     )
@@ -38,13 +38,13 @@ export const targetRouter = t.router({
           },
         },
         update: {
-          sanitizedCode: input.sanitizedCode,
+          code: input.code,
           codeLength: input.codeLength,
         },
         create: {
           userId: ctx.session.user.id,
           targetId: input.targetId,
-          sanitizedCode: input.sanitizedCode,
+          code: input.code,
           codeLength: input.codeLength,
         },
       });

@@ -55,7 +55,7 @@ type SubmitCodeButtonProps = {
 };
 
 function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
-  const { sanitizedCode, code } = useCodeContext();
+  const { code } = useCodeContext();
   const { percent } = useCompareOutputTarget();
   const { setShowSignIn } = useDialogContext();
   const targetMutation = trpc.target.submit.useMutation();
@@ -66,16 +66,14 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
   }, [code]);
 
   const onClick = async () => {
-    if (sanitizedCode) {
-      try {
-        await targetMutation.mutateAsync({
-          targetId,
-          sanitizedCode,
-          codeLength,
-        });
-      } catch (error) {
-        setShowSignIn(true);
-      }
+    try {
+      await targetMutation.mutateAsync({
+        targetId,
+        code,
+        codeLength,
+      });
+    } catch (error) {
+      setShowSignIn(true);
     }
   };
 

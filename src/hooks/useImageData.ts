@@ -178,3 +178,59 @@ export function usePutImageData(ref: React.RefObject<HTMLCanvasElement>, imageDa
     ctx.putImageData(imageData, 0, 0);
   }, [ref, imageData]);
 }
+
+function svgObjectUrl(svg: string) {
+  return URL.createObjectURL(
+    new Blob([svg], {
+      type: "image/svg+xml",
+    }),
+  );
+}
+
+/**
+ * An image src (for <img src={src}/>) from svg string, without exposing the actual svg string
+ *
+ * HOW?
+ * ```raw
+ * 1. make objecturl from an svg string
+ * 2. use that as source for an image
+ *    2.1 One could stop here but svg string is still visible by going to the img src which is a blob
+ * 3. read that image and draw it on canvas
+ * 4. make a dataurl of the canvas
+ * 5. use that as source for the returned image
+ * ```
+ */
+export function useImageSourceFromSvg(svg: string) {
+  const [src, setSrc] = useState("");
+
+  useEffect(() => {
+    const url = svgObjectUrl(svg);
+    //const img = document.createElement("img");
+    //img.width = 240;
+    //img.height = 240;
+    const img = new Image(240, 240);
+    const canvas = document.createElement("canvas");
+    canvas.width = 240;
+    canvas.height = 240;
+    const ctx = canvas.getContext("2d");
+
+    if (!ctx) return;
+
+    img.src = url;
+    img.addEventListener(
+      "load",
+      () => {
+        ctx.drawImage(img, 0, 0, 240, 240);
+        console.log("draing image now");
+        setSrc(canvas.toDataURL());
+      },
+      { once: true },
+    );
+
+    return () => {
+      img.remove();
+      canvas.remove();
+    };
+  }, [svg]);
+  return src;
+}

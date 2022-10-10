@@ -1,13 +1,14 @@
 import type { NextPage } from "next";
 import { Head } from "src/components/Head";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { trpc } from "../utils/trpc";
 import Link from "next/link";
 import { hashidFromNumber } from "src/utils/hashids";
 import { Nav } from "src/components/Nav";
+import { SvgImg } from "src/components/SvgImg";
+
+const hmm = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" height="240px" width="240px"><rect fill="#FCD34D" height="100%" width="100%" y="0" x="0"></rect><rect fill="#b45309" height="120" width="120" y="0" x="0"></rect></svg>`;
 
 const Home: NextPage = () => {
-  const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
+  //const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
 
   return (
     <>
@@ -18,23 +19,18 @@ const Home: NextPage = () => {
         url="https://svgbattle.andyfx.net"
       />
       <Nav />
-      <div>
-        <Link href={`/b/${hashidFromNumber(0)}`}>battle 0</Link>
-        <Link href={`/b/${hashidFromNumber(1)}`}>battle 1</Link>
-      </div>
-      <div>
-        <Link href={`/profile/${hashidFromNumber(0)}`}>user 0</Link>
-        <Link href={`/profile/${hashidFromNumber(1)}`}>user 1</Link>
-      </div>
-      <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
-        <h1 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[5rem]">
-          Create <span className="text-purple-300">T3</span> App
-        </h1>
-        <p className="text-2xl text-gray-700">This stack uses:</p>
-        <div className="flex w-full items-center justify-center pt-6 text-2xl text-blue-500">
-          {hello.data ? <p>{hello.data.greeting}</p> : <p>Loading..</p>}
+
+      <main className="container">
+        <div>home page here</div>
+        <SvgImg svg={hmm} alt="hmm with hidden source" />
+        <div>
+          <Link href={`/b/${hashidFromNumber(0)}`}>battle 0</Link>
+          <Link href={`/b/${hashidFromNumber(1)}`}>battle 1</Link>
         </div>
-        <AuthShowcase />
+        <div>
+          <Link href={`/profile/${hashidFromNumber(0)}`}>user 0</Link>
+          <Link href={`/profile/${hashidFromNumber(1)}`}>user 1</Link>
+        </div>
       </main>
     </>
   );
@@ -42,6 +38,7 @@ const Home: NextPage = () => {
 
 export default Home;
 
+/*
 function AuthShowcase() {
   const { data: secretMessage } = trpc.auth.getSecretMessage.useQuery();
 
@@ -60,3 +57,4 @@ function AuthShowcase() {
     </div>
   );
 }
+*/
