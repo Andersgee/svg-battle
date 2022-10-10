@@ -139,7 +139,7 @@ type SigninDialogProps = {
 export function SigninDialog({ open = false }: SigninDialogProps) {
   if (open) {
     return (
-      <div className="absolute top-12 right-0 border-2 bg-neutral-50 shadow-md ">
+      <div className="absolute top-12 right-0 z-10 border-2 bg-neutral-50 shadow-md ">
         <SignInButtons className="p-4" />
       </div>
     );
@@ -157,14 +157,12 @@ type ProfileDialogProps = {
 function ProfileDialog({ open = false, userName, userIntId }: ProfileDialogProps) {
   if (open) {
     return (
-      <div className="absolute top-12 right-0 border-2 bg-neutral-50 p-4 shadow-md">
+      <div className="absolute top-12 right-0 z-10 border bg-neutral-50 p-4 shadow-md dark:bg-neutral-900">
+        <p>
+          signed in as <Link href={`/profile/${hashidFromNumber(userIntId)}`}>{userName}</Link>
+        </p>
         <div>
-          <p>
-            signed in as <Link href={`/profile/${hashidFromNumber(userIntId)}`}>{userName}</Link>
-          </p>
-          <div>
-            <button onClick={() => signOut()}>sign out</button>
-          </div>
+          <button onClick={() => signOut()}>sign out</button>
         </div>
       </div>
     );

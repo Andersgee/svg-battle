@@ -27,16 +27,6 @@ const Page: NextPage<Props> = ({ targets }) => {
 
       <main className=" flex justify-center">
         <div className="container">
-          <div>home page here</div>
-
-          <div>
-            <Link href={`/b/${hashidFromNumber(0)}`}>battle 0</Link>
-            <Link href={`/b/${hashidFromNumber(1)}`}>battle 1</Link>
-          </div>
-          <div>
-            <Link href={`/profile/${hashidFromNumber(0)}`}>user 0</Link>
-            <Link href={`/profile/${hashidFromNumber(1)}`}>user 1</Link>
-          </div>
           <h2>Community created</h2>
           <div className="grid w-full grid-cols-1 justify-items-center gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             <Link href="/create" className="relative hover:shadow-lg">
