@@ -43,12 +43,12 @@ export const targetRouter = t.router({
       z.object({
         targetId: z.number(),
         code: z.string(),
-        codeLength: z.number(),
         percent: z.number(),
       }),
     )
     .mutation(({ input, ctx }) => {
-      const score = calcScore(input.percent, input.codeLength);
+      const codeLength = input.code.replaceAll("\n", "").length;
+      const score = calcScore(input.percent, codeLength);
       return ctx.prisma.targetSubmission.upsert({
         where: {
           targetId_userId: {
@@ -58,14 +58,14 @@ export const targetRouter = t.router({
         },
         update: {
           code: input.code,
-          codeLength: input.codeLength,
+          codeLength,
           score,
         },
         create: {
           userId: ctx.session.user.id,
           targetId: input.targetId,
           code: input.code,
-          codeLength: input.codeLength,
+          codeLength,
           score,
         },
       });

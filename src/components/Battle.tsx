@@ -19,20 +19,24 @@ type Props = {
 export function Battle({ className, target }: Props) {
   const { setCode: setTargetCode } = useTargetContext();
   const { setCode } = useCodeContext();
+  const { data: sessionData } = useSession();
+  const { data: submissionData } = trpc.target.getSubmission.useQuery(
+    { targetId: target.id },
+    { refetchOnWindowFocus: false, retry: false, enabled: !!sessionData?.user },
+  );
 
-  const submission = trpc.target.getSubmission.useQuery({ targetId: target.id }, { refetchOnWindowFocus: false });
   useEffect(() => {
     setTargetCode(target.svg);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [target]);
 
   useEffect(() => {
-    if (submission.data) {
+    if (submissionData) {
       console.log("Battle, effect [submission]");
-      setCode(submission.data.code);
+      setCode(submissionData.code);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [submission.data]);
+  }, [submissionData]);
 
   return (
     <div className={className}>
@@ -71,22 +75,23 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
   const { percent } = useCompareOutputTarget();
   const { setShowSignIn } = useDialogContext();
   const targetMutation = trpc.target.submit.useMutation();
-  const [codeLength, setCodeLength] = useState(0);
-
-  useEffect(() => {
-    setCodeLength(code.replaceAll("\n", "").length);
-  }, [code]);
+  const { data: sessionData } = useSession();
+  const [showWarning, setShowWarning] = useState(false);
 
   const onClick = async () => {
-    try {
-      await targetMutation.mutateAsync({
-        targetId,
-        code,
-        codeLength,
-        percent,
-      });
-    } catch (error) {
+    if (sessionData?.user) {
+      try {
+        await targetMutation.mutateAsync({
+          targetId,
+          code,
+          percent,
+        });
+      } catch (error) {
+        setShowSignIn(true);
+      }
+    } else {
       setShowSignIn(true);
+      setShowWarning(true);
     }
   };
 
@@ -104,13 +109,11 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
       >
         SUBMIT
       </button>
-      {targetMutation.data && (
-        <>
-          <div className="text-green-500">Submitted!</div>
-          <div className="text-green-500">Your score: {targetMutation.data.score}</div>
-        </>
+      {targetMutation.data && <div className="text-green-500">Submitted! score: {targetMutation.data.score}</div>}
+      {targetMutation.error && (
+        <div className="text-red-500">Something went wrong. ({targetMutation.error.message})</div>
       )}
-      {targetMutation.error && <div className="text-red-500">Must be signed in</div>}
+      {showWarning && <div className="text-red-500">Must sign in.</div>}
     </div>
   );
 }
