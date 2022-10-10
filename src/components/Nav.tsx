@@ -8,9 +8,7 @@ export function Nav() {
       <div>
         <Link href="/">home</Link>
       </div>
-      <div>
-        <Link href="/create">create</Link>
-      </div>
+      <div></div>
       <div className="flex">
         <ThemeToggleButton />
         <ProfileButton />

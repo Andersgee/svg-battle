@@ -200,7 +200,7 @@ function svgObjectUrl(svg: string) {
  * 5. use that as source for the returned image
  * ```
  */
-export function useImageSourceFromSvg(svg: string) {
+export function useImageSourceFromSvg(svg: string, width = 240, height = 240) {
   const [src, setSrc] = useState("");
 
   useEffect(() => {
@@ -208,10 +208,10 @@ export function useImageSourceFromSvg(svg: string) {
     //const img = document.createElement("img");
     //img.width = 240;
     //img.height = 240;
-    const img = new Image(240, 240);
+    const img = new Image(width, height);
     const canvas = document.createElement("canvas");
-    canvas.width = 240;
-    canvas.height = 240;
+    canvas.width = width;
+    canvas.height = height;
     const ctx = canvas.getContext("2d");
 
     if (!ctx) return;
@@ -220,7 +220,7 @@ export function useImageSourceFromSvg(svg: string) {
     img.addEventListener(
       "load",
       () => {
-        ctx.drawImage(img, 0, 0, 240, 240);
+        ctx.drawImage(img, 0, 0, width, height);
         console.log("draing image now");
         setSrc(canvas.toDataURL());
       },
@@ -231,6 +231,6 @@ export function useImageSourceFromSvg(svg: string) {
       img.remove();
       canvas.remove();
     };
-  }, [svg]);
+  }, [svg, width, height]);
   return src;
 }

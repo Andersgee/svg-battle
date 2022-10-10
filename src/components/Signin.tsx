@@ -186,7 +186,7 @@ export function ProfileButton({ className }: ProfileButtonProps) {
   return (
     <div ref={ref} className={className}>
       <button onClick={() => setShowSignIn((prev) => !prev)} aria-label="profile">
-        <Person className="w-full fill-neutral-400 hover:fill-neutral-700 dark:fill-neutral-600 dark:hover:fill-neutral-400" />
+        <Person className="w-full fill-neutral-600 hover:fill-neutral-700 dark:fill-neutral-500 dark:hover:fill-neutral-400" />
       </button>
       {sessionData?.user ? (
         <ProfileDialog open={showSignIn} userName={sessionData.user.name} userIntId={sessionData.user.intId} />
