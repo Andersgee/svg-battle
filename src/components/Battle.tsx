@@ -43,29 +43,8 @@ export function Battle({ className, target }: Props) {
           <Editor />
         </div>
       </div>
-      <div className="mx-4 flex gap-8">
+      <div className="mx-4 flex justify-center gap-8">
         <SubmitCodeButton targetId={target.id} />
-        <div>
-          <h2 className="text-center text-neutral-600 dark:text-neutral-300">hints</h2>
-          <div className="flex gap-4 text-neutral-600 dark:text-neutral-300">
-            <div className="">
-              <h3 className="text-neutral-600 dark:text-neutral-300">tags</h3>
-              <ul>
-                {target.svgTagNames.split(" ").map((str) => (
-                  <li key={str}>{str}</li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-neutral-600 dark:text-neutral-300">colors</h3>
-              <ul>
-                {target.svgColorValues.split(" ").map((str) => (
-                  <li key={str}>{str}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );

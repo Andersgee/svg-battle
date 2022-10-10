@@ -37,11 +37,31 @@ const Page: NextPage<Props> = ({ target, hashid }) => {
         />
         <Nav />
         <main className="">
-          <div className="">
-            <h1 className="text-center">
-              {target.title} by{" "}
-              <Link href={`/profile/${hashidFromNumber(target.creator.intId)}`}>{target.creator.name}</Link>
-            </h1>
+          <div className="flex justify-center">
+            <div>
+              <h1 className="text-center">
+                {target.title} by{" "}
+                <Link href={`/profile/${hashidFromNumber(target.creator.intId)}`}>{target.creator.name}</Link>
+              </h1>
+              <div className="flex justify-center gap-4">
+                <div>
+                  <h2 className="text-neutral-600 dark:text-neutral-300">tags</h2>
+                  <ul>
+                    {target.svgTagNames.split(" ").map((str) => (
+                      <li key={str}>{str}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h2 className="text-neutral-600 dark:text-neutral-300">colors</h2>
+                  <ul>
+                    {target.svgColorValues.split(" ").map((str) => (
+                      <li key={str}>{str}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
           <Battle target={target} />
         </main>

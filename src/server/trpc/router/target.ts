@@ -42,10 +42,10 @@ export const targetRouter = t.router({
           codeLength: input.codeLength,
         },
         create: {
+          userId: ctx.session.user.id,
+          targetId: input.targetId,
           sanitizedCode: input.sanitizedCode,
           codeLength: input.codeLength,
-          targetId: input.targetId,
-          userId: ctx.session.user.id,
         },
       });
     }),
