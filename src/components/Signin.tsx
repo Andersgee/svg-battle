@@ -157,7 +157,7 @@ type ProfileDialogProps = {
 function ProfileDialog({ open = false, userName, userIntId }: ProfileDialogProps) {
   if (open) {
     return (
-      <div className="absolute top-12 right-0 border-2 bg-neutral-50 shadow-md ">
+      <div className="absolute top-12 right-0 border-2 bg-neutral-50 p-4 shadow-md">
         <div>
           <p>
             signed in as <Link href={`/profile/${hashidFromNumber(userIntId)}`}>{userName}</Link>

@@ -54,14 +54,18 @@ const Page: NextPage<Props> = ({ user, hashid }) => {
           </ul>
 
           <h2>completed battles</h2>
-          <ul className="">
-            {user.targetSubmissions.map((target) => (
-              <li key={target.targetId} className="border-b-2">
-                <Link href={`/b/${hashidFromNumber(target.targetId)}`}>{target.target.title}</Link> in{" "}
-                {target.codeLength} chars
-              </li>
-            ))}
-          </ul>
+          <table className="">
+            <tbody>
+              {user.targetSubmissions.map((submission) => (
+                <tr key={submission.targetId} className="border-b-2">
+                  <td>
+                    <Link href={`/b/${hashidFromNumber(submission.targetId)}`}>{submission.target.title}</Link>
+                  </td>
+                  <td>({submission.score} points)</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
           {user.targetSubmissions.length === 0 && <p>no battles completed</p>}
         </div>
       </main>
@@ -114,6 +118,7 @@ async function getUser(id: number) {
         select: {
           codeLength: true,
           targetId: true,
+          score: true,
           createdAt: true,
           target: {
             select: {

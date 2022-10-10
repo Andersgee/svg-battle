@@ -81,6 +81,7 @@ model TargetSubmission {
     createdAt  DateTime @default(now())
     code       String   @db.VarChar(10000)
     codeLength Int
+    score      Int
     target     Target   @relation(fields: [targetId], references: [id])
     targetId   Int
     user       User     @relation(fields: [userId], references: [id])

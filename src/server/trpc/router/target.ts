@@ -1,6 +1,7 @@
 import { t, authedProcedure } from "../trpc";
 import { z } from "zod";
 import { colorValuesString, tagNamesString } from "src/utils/svgmetaparse";
+import { calcScore } from "src/utils/score";
 
 export const targetRouter = t.router({
   create: authedProcedure
@@ -21,15 +22,33 @@ export const targetRouter = t.router({
         },
       });
     }),
+  getSubmission: authedProcedure
+    .input(
+      z.object({
+        targetId: z.number(),
+      }),
+    )
+    .query(({ input, ctx }) => {
+      return ctx.prisma.targetSubmission.findUnique({
+        where: {
+          targetId_userId: {
+            targetId: input.targetId,
+            userId: ctx.session.user.id,
+          },
+        },
+      });
+    }),
   submit: authedProcedure
     .input(
       z.object({
         targetId: z.number(),
-        code: z.string().min(98),
+        code: z.string(),
         codeLength: z.number(),
+        percent: z.number(),
       }),
     )
     .mutation(({ input, ctx }) => {
+      const score = calcScore(input.percent, input.codeLength);
       return ctx.prisma.targetSubmission.upsert({
         where: {
           targetId_userId: {
@@ -40,12 +59,14 @@ export const targetRouter = t.router({
         update: {
           code: input.code,
           codeLength: input.codeLength,
+          score,
         },
         create: {
           userId: ctx.session.user.id,
           targetId: input.targetId,
           code: input.code,
           codeLength: input.codeLength,
+          score,
         },
       });
     }),

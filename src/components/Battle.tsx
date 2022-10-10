@@ -7,6 +7,7 @@ import { Editor } from "./Editor";
 import type { Target } from "src/pages/b/[hashid]";
 import { useCompareOutputTarget } from "src/hooks/useImageData";
 import { useDialogContext } from "src/contexts/Dialog";
+import { useSession } from "next-auth/react";
 
 //<svg width="240px" height="240px" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg"><circle cx="120" cy="120" r="120" fill="#f0c"/><rect x="120" y="120" width="120" height="120" fill="#00c"/></svg>
 
@@ -16,11 +17,22 @@ type Props = {
 };
 
 export function Battle({ className, target }: Props) {
-  const { setCode } = useTargetContext();
+  const { setCode: setTargetCode } = useTargetContext();
+  const { setCode } = useCodeContext();
+
+  const submission = trpc.target.getSubmission.useQuery({ targetId: target.id }, { refetchOnWindowFocus: false });
   useEffect(() => {
-    setCode(target.svg);
+    setTargetCode(target.svg);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [target]);
+
+  useEffect(() => {
+    if (submission.data) {
+      console.log("Battle, effect [submission]");
+      setCode(submission.data.code);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [submission.data]);
 
   return (
     <div className={className}>
@@ -71,6 +83,7 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
         targetId,
         code,
         codeLength,
+        percent,
       });
     } catch (error) {
       setShowSignIn(true);
@@ -80,7 +93,7 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
   return (
     <div className="">
       <button
-        disabled={targetMutation.isLoading || percent < 100}
+        disabled={targetMutation.isLoading}
         onClick={onClick}
         className="my-2 rounded-md bg-indigo-600 px-4
           py-3 text-center font-semibold tracking-wider text-white
@@ -94,7 +107,7 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
       {targetMutation.data && (
         <>
           <div className="text-green-500">Submitted!</div>
-          <div className="text-green-500">Your score: {codeLength} chars (newlines auto removed)</div>
+          <div className="text-green-500">Your score: {targetMutation.data.score}</div>
         </>
       )}
       {targetMutation.error && <div className="text-red-500">Must be signed in</div>}
