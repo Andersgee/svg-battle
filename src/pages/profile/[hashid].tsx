@@ -39,25 +39,25 @@ const Page: NextPage<Props> = ({ user, hashid }) => {
             <img
               src={user.image!}
               alt={user.name!}
-              className="mr-2 h-12 w-12 rounded-full shadow-imageborder  shadow-black dark:shadow-white"
+              className="mr-2 h-10 w-10 rounded-full shadow-imageborder  shadow-black dark:shadow-white"
             />
-            <h1 className="text-4xl">{user.name}</h1>
+            <h1 className="text-2xl">{user.name}</h1>
           </div>
 
-          <h2>created battles</h2>
+          <h2 className="mt-4 text-base text-neutral-700 dark:text-neutral-300">created battles</h2>
           <ul className="">
             {user.createdTargets.map((target) => (
-              <li key={target.id} className="border-b-2">
+              <li key={target.id} className="mt-1">
                 <Link href={`/b/${hashidFromNumber(target.id)}`}>{target.title}</Link>
               </li>
             ))}
           </ul>
 
-          <h2>completed battles</h2>
+          <h2 className="mt-4 text-base text-neutral-700 dark:text-neutral-300">points</h2>
           <table className="">
             <tbody>
               {user.targetSubmissions.map((submission) => (
-                <tr key={submission.targetId} className="border-b-2">
+                <tr key={submission.targetId} className="pt-1">
                   <td>
                     <Link href={`/b/${hashidFromNumber(submission.targetId)}`}>{submission.target.title}</Link>
                   </td>

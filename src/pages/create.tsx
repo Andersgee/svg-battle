@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useId, useState } from "react";
@@ -24,13 +25,15 @@ const Page: NextPage = () => {
       />
       <Nav />
       <main className="">
+        <div className="flex justify-center">
+          <h1>Create new battle</h1>
+        </div>
         <div
           className="grid grid-cols-1 place-items-center items-start p-4
           sm:grid-cols-2  
           lg:flex lg:gap-4"
         >
           <div className="sm:order-2 lg:order-3">
-            <h2>create</h2>
             <div className="w-[240px]">
               <CreateTargetButton />
             </div>
@@ -58,9 +61,13 @@ function CreateTargetButton() {
   const { sanitizedCode } = useCodeContext();
   const targetMutation = trpc.target.create.useMutation();
   const { setShowSignIn } = useDialogContext();
+  const { data: sessionData } = useSession();
+  const [showWarning, setShowWarning] = useState(false);
 
   const onClick = async () => {
-    if (title && sanitizedCode) {
+    if (!title || !sanitizedCode) return;
+
+    if (sessionData?.user) {
       try {
         const res = await targetMutation.mutateAsync({ title: title, svg: sanitizedCode });
         //ping the created battle for static generation before its clicked
@@ -69,6 +76,9 @@ function CreateTargetButton() {
       } catch (error) {
         setShowSignIn(true);
       }
+    } else {
+      setShowSignIn(true);
+      setShowWarning(true);
     }
   };
 
@@ -103,17 +113,22 @@ function CreateTargetButton() {
         >
           CREATE
         </button>
-        {targetMutation.error && <div className="text-red-500">Must be signed in</div>}
-        <div>
-          {targetMutation.data && (
+        {targetMutation.error && (
+          <div className="text-red-500">Something went wrong. ({targetMutation.error.message})</div>
+        )}
+        {showWarning && <div className="text-red-500">Must sign in.</div>}
+
+        {targetMutation.data && (
+          <div>
+            Created!{" "}
             <Link
               className="underline decoration-dotted hover:text-neutral-500 hover:decoration-solid dark:hover:text-neutral-300"
               href={`/b/${hashidFromNumber(targetMutation.data.id)}`}
             >
-              open battle {targetMutation.data.title}
+              {targetMutation.data.title}
             </Link>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

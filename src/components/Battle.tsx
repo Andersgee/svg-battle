@@ -9,8 +9,6 @@ import { useCompareOutputTarget } from "src/hooks/useImageData";
 import { useDialogContext } from "src/contexts/Dialog";
 import { useSession } from "next-auth/react";
 
-//<svg width="240px" height="240px" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg"><circle cx="120" cy="120" r="120" fill="#f0c"/><rect x="120" y="120" width="120" height="120" fill="#00c"/></svg>
-
 type Props = {
   className?: string;
   target: Target;
@@ -32,7 +30,6 @@ export function Battle({ className, target }: Props) {
 
   useEffect(() => {
     if (submissionData) {
-      console.log("Battle, effect [submission]");
       setCode(submissionData.code);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
