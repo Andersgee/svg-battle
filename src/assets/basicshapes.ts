@@ -65,3 +65,18 @@ export const pathshapes: HardcodedTargets = [
       "This battle introduces the [elliptical arc commands](https://www.w3.org/TR/SVG2/paths.html#PathDataEllipticalArcCommands)",
   },
 ];
+
+export const intermediateshapes: HardcodedTargets = [
+  {
+    title: "linearGradient",
+    id: 21,
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" height="240px" width="240px"><defs><linearGradient id="MyGradient"><stop offset="0%" stop-color="#34d399"></stop><stop offset="100%" stop-color="#facc15"></stop></linearGradient></defs><rect x="0" y="0" width="100%" height="100%" fill="url(#MyGradient)"></rect></svg>`,
+    description: "This battle introduces [linear gradients](https://www.w3.org/TR/SVG2/pservers.html#LinearGradients)",
+  },
+  {
+    title: "radialGradient",
+    id: 22,
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" height="240px" width="240px"><defs>    <radialGradient r="100" cy="120" cx="120" gradientUnits="userSpaceOnUse" id="MyGradient">      <stop stop-color="#dbeafe" offset="0%"></stop>      <stop stop-color="#6366f1" offset="50%"></stop>      <stop stop-color="#dbeafe" offset="100%"></stop>    </radialGradient>  </defs>  <rect height="100%" width="100%" y="0" x="0" fill="url(#MyGradient)"></rect></svg>`,
+    description: "This battle introduces [radial gradients](https://www.w3.org/TR/SVG2/pservers.html#RadialGradients)",
+  },
+];
