@@ -10,6 +10,7 @@ import { Nav } from "src/components/Nav";
 import { CodeProvider, useCodeContext } from "src/contexts/Code";
 import { useDialogContext } from "src/contexts/Dialog";
 import { hashidFromNumber } from "src/utils/hashids";
+import { revalidate } from "src/utils/revalidate";
 import { trpc } from "src/utils/trpc";
 //import { trpc } from "../utils/trpc";
 
@@ -55,7 +56,6 @@ const Page: NextPage = () => {
 export default Page;
 
 function CreateTargetButton() {
-  const router = useRouter();
   const inputId = useId();
   const [title, setTitle] = useState("");
   const { sanitizedCode } = useCodeContext();
@@ -72,7 +72,7 @@ function CreateTargetButton() {
         const res = await targetMutation.mutateAsync({ title: title, svg: sanitizedCode });
         //revalidate (for the first time) the battle page
         const href = `/b/${hashidFromNumber(res.id)}`;
-        router.prefetch(href);
+        revalidate(href);
       } catch (error) {
         setShowSignIn(true);
       }

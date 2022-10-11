@@ -49,9 +49,9 @@ const Page: NextPage<Props> = ({ user, hashid }) => {
           <table className="">
             <tbody>
               {user.createdTargets.map((target) => (
-                <tr key={target.id} className="py-2">
+                <tr key={target.id} className="">
                   <td className="">
-                    <Link className="mr-2 flex items-center" href={`/b/${hashidFromNumber(target.id)}`}>
+                    <Link className="mr-2 flex items-center py-2" href={`/b/${hashidFromNumber(target.id)}`}>
                       <SvgImg
                         svg={target.svg}
                         alt={target.title}
@@ -72,9 +72,9 @@ const Page: NextPage<Props> = ({ user, hashid }) => {
           <table className="">
             <tbody>
               {user.targetSubmissions.map((submission) => (
-                <tr key={submission.targetId} className="pt-1">
-                  <td>
-                    <Link className="mr-2 flex items-center" href={`/b/${hashidFromNumber(submission.targetId)}`}>
+                <tr key={submission.targetId} className="">
+                  <td className="">
+                    <Link className="mr-2 flex items-center py-2" href={`/b/${hashidFromNumber(submission.targetId)}`}>
                       <SvgImg
                         svg={submission.target.svg}
                         alt={submission.target.title}
