@@ -82,9 +82,9 @@ model TargetSubmission {
     code       String   @db.VarChar(10000)
     codeLength Int
     score      Int
-    target     Target   @relation(fields: [targetId], references: [id])
+    target     Target   @relation(fields: [targetId], references: [id], onDelete: Cascade)
     targetId   Int
-    user       User     @relation(fields: [userId], references: [id])
+    user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId     String
 
     @@id([targetId, userId])

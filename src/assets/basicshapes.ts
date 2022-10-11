@@ -22,8 +22,8 @@ export const basicshapes: (Targets[number] & { description: string })[] = [
   },
   {
     title: "line",
-    id: 10,
-    svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" height="240px" width="240px"><rect fill="#fcd34d" height="100%" width="100%"></rect><line stroke="#d97706" stroke-width="10" y2="180" x2="180" y1="60" x1="60"></line></svg>`,
+    id: 13,
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" height="240px" width="240px"><rect fill="#fcd34d" height="100%" width="100%"></rect><line stroke="#d97706" stroke-width="20" y2="180" x2="180" y1="60" x1="60"></line></svg>`,
     description: "This battle introduces the line element.",
   },
   {

@@ -94,10 +94,10 @@ function compareImageData(imageData: ImageData, targetImageData: ImageData) {
   };
 }
 
-const absdiff = (a: number, b: number) => Math.abs(a - b);
+//const absdiff = (a: number, b: number) => Math.abs(a - b);
 
 /** return 0 if a==b otherwise return largest */
-const diffValue = (a: number, b: number) => (a == b ? 0 : a > b ? a : b);
+//const diffValue = (a: number, b: number) => (a == b ? 0 : a > b ? a : b);
 
 //const diffValue = (a: number, b: number) => Math.abs(b - a);
 /**

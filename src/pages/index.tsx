@@ -28,7 +28,7 @@ const Page: NextPage<Props> = ({ targets }) => {
         <div className="mx-2">
           <h2 className="mt-8 text-2xl">Basic Shapes</h2>
           <p className=" mb-2">
-            Learn the basic shapes of svg in these basic battles. An introduction to the basic shapes is available{" "}
+            Learn the basic shapes of svg in these battles. An introduction to the basic shapes is available{" "}
             <Link href="https://www.w3.org/TR/SVG2/shapes.html"> here</Link>.
           </p>
           <div className="grid w-full grid-cols-1 justify-items-center gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -43,12 +43,12 @@ const Page: NextPage<Props> = ({ targets }) => {
                     className="h-[240px] w-[240px] outline outline-1 outline-neutral-300 
                     dark:outline-neutral-700"
                   />
-                  <p
+                  <div
                     className="absolute bottom-0 left-0 ml-2 mb-1 max-w-[200px] overflow-hidden text-ellipsis 
                   whitespace-nowrap rounded-sm bg-white px-1 dark:bg-black"
                   >
                     {target.title}
-                  </p>
+                  </div>
                 </Link>
               );
             })}
@@ -66,9 +66,9 @@ const Page: NextPage<Props> = ({ targets }) => {
                 height={240}
                 className="fill-neutral-600 hover:fill-neutral-700 dark:fill-neutral-500 dark:hover:fill-neutral-400 "
               />
-              <p className="absolute bottom-0 left-0 ml-2 mb-1 max-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap">
+              <div className="absolute bottom-0 left-0 ml-2 mb-1 max-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap">
                 create new
-              </p>
+              </div>
             </Link>
 
             {targets.map((target) => {
@@ -82,12 +82,12 @@ const Page: NextPage<Props> = ({ targets }) => {
                     className="h-[240px] w-[240px] outline outline-1 outline-neutral-300 
                     dark:outline-neutral-700"
                   />
-                  <p
+                  <div
                     className="absolute bottom-0 left-0 ml-2 mb-1 max-w-[200px] overflow-hidden text-ellipsis 
                   whitespace-nowrap rounded-sm bg-white px-1 dark:bg-black"
                   >
                     {target.title}
-                  </p>
+                  </div>
                 </Link>
               );
             })}
