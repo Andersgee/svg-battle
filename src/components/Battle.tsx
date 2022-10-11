@@ -38,6 +38,17 @@ export function Battle({ className, target }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submissionData]);
 
+  useEffect(() => {
+    if (sessionData?.user) {
+      const tempcode = localStorage.getItem("tempcode");
+      if (tempcode) {
+        setCode(tempcode);
+        localStorage.removeItem("tempcode");
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessionData?.user]);
+
   return (
     <div className={className}>
       {/*<CanvasDebug />*/}
@@ -95,6 +106,13 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
     } else {
       setShowSignIn(true);
       setShowWarning(true);
+      //tried submitting without being signed in
+      //if the person goes to sign in (and returns to this page automatically) the code will be lost
+      //idea:
+      //1. save it temporarily in localstorage
+      //2. on page load, check if
+      //     if (signedin && code==="" && localstorage has code
+      //     then paste localstorage code and clear localstorage
     }
   };
 

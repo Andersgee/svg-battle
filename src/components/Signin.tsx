@@ -1,6 +1,7 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRef } from "react";
+import { useCodeContext } from "src/contexts/Code";
 import { useDialogContext } from "src/contexts/Dialog";
 import useOnClickOutside from "src/hooks/useOnClickOutside";
 import { Person } from "src/icons/Person";
@@ -40,12 +41,22 @@ type SignInButtonsProps = {
  * Keep same look (light mode) always.
  */
 export function SignInButtons({ className }: SignInButtonsProps) {
+  const { code } = useCodeContext();
+
+  const onClick = (providerId: string) => () => {
+    //keep the users code. re-use it when returning from sign in flow.
+    if (code) {
+      localStorage.setItem("tempcode", code);
+    }
+    signIn(providerId);
+  };
+
   return (
     <div className={className}>
       {Object.values(providers).map((provider) => (
         <div key={provider.name}>
           <button
-            onClick={() => signIn(provider.id)}
+            onClick={onClick(provider.id)}
             className="mb-4 flex w-64 items-center justify-around bg-white p-3 font-medium text-black shadow-md transition duration-100 ease-out hover:bg-neutral-100 hover:ease-in focus:bg-neutral-200"
           >
             <Icon name={provider.name} className="mr-1 h-7" />

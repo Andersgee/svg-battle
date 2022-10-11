@@ -35,7 +35,7 @@ const Page: NextPage<Props> = ({ user, hashid }) => {
       <Nav />
       <main className="container mx-auto flex min-h-screen justify-center p-4">
         <div>
-          <div className="flex align-baseline">
+          <div className="flex justify-center align-baseline">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={user.image!}
@@ -45,7 +45,7 @@ const Page: NextPage<Props> = ({ user, hashid }) => {
             <h1 className="text-2xl">{user.name}</h1>
           </div>
 
-          <h2 className="mt-4 text-center text-lg text-neutral-700 dark:text-neutral-300">created battles</h2>
+          <h2 className="mt-10 text-center text-lg text-neutral-700 dark:text-neutral-300">created battles</h2>
           <table className="">
             <tbody>
               {user.createdTargets.map((target) => (
@@ -67,6 +67,7 @@ const Page: NextPage<Props> = ({ user, hashid }) => {
               ))}
             </tbody>
           </table>
+          {user.createdTargets.length === 0 && <p>no created battles</p>}
 
           <h2 className="mt-4 text-center text-lg text-neutral-700 dark:text-neutral-300">submissions</h2>
           <table className="">
