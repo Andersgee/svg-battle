@@ -7,6 +7,7 @@ import { SvgImg } from "src/components/SvgImg";
 import { prisma } from "src/server/db/client";
 import { inferAsyncReturnType } from "@trpc/server";
 import { Add } from "src/icons/Add";
+import { basicshapes } from "src/assets/basicshapes";
 
 type Props = {
   targets: Targets;
@@ -24,8 +25,40 @@ const Page: NextPage<Props> = ({ targets }) => {
       <Nav />
 
       <main className="flex justify-center">
-        <div className="">
-          <h2>Community created</h2>
+        <div className="mx-2">
+          <h2 className="mt-8 text-2xl">Basic Shapes</h2>
+          <p className=" mb-2">
+            Learn the basic shapes of svg in these basic battles. An introduction to the basic shapes is available{" "}
+            <Link href="https://www.w3.org/TR/SVG2/shapes.html"> here</Link>.
+          </p>
+          <div className="grid w-full grid-cols-1 justify-items-center gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {basicshapes.map((target) => {
+              return (
+                <Link key={target.id} href={`/b/${hashidFromNumber(target.id)}`} className="relative hover:shadow-lg">
+                  <SvgImg
+                    svg={target.svg}
+                    alt={target.title}
+                    width={240}
+                    height={240}
+                    className="h-[240px] w-[240px] outline outline-1 outline-neutral-300 
+                    dark:outline-neutral-700"
+                  />
+                  <p
+                    className="absolute bottom-0 left-0 ml-2 mb-1 max-w-[200px] overflow-hidden text-ellipsis 
+                  whitespace-nowrap rounded-sm bg-white px-1 dark:bg-black"
+                  >
+                    {target.title}
+                  </p>
+                </Link>
+              );
+            })}
+          </div>
+          <h2 className="mt-8 text-2xl">Latest battles</h2>
+          <p className="mb-2"></p>
+          <p className=" mb-2">
+            The latest battles created by the community. You can create a new battle <Link href="/create">here</Link>.
+          </p>
+
           <div className="grid w-full grid-cols-1 justify-items-center gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             <Link href="/create" className="relative hover:shadow-lg ">
               <Add
@@ -88,7 +121,7 @@ export const getStaticProps: GetStaticProps = async () => {
 //////////////////////////
 // utils
 
-type Targets = NonNullable<inferAsyncReturnType<typeof getTargets>>;
+export type Targets = NonNullable<inferAsyncReturnType<typeof getTargets>>;
 
 async function getTargets() {
   return prisma.target.findMany({

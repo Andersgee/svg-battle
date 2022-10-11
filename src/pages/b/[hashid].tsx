@@ -45,20 +45,15 @@ const Page: NextPage<Props> = ({ target, hashid }) => {
               </h1>
               <div className="flex justify-center gap-4">
                 <div>
-                  <h2 className="text-neutral-600 dark:text-neutral-300">tags</h2>
-                  <ul>
-                    {target.svgTagNames.split(" ").map((str) => (
-                      <li key={str}>{str}</li>
+                  <pre>tags: {target.svgTagNames}</pre>
+                  <pre className="flex">
+                    <div>colors: </div>
+                    {target.svgColorValues.split(" ").map((c) => (
+                      <div key={c} className="mr-2 flex">
+                        <Dot fill={c} /> <span>{c}</span>
+                      </div>
                     ))}
-                  </ul>
-                </div>
-                <div>
-                  <h2 className="text-neutral-600 dark:text-neutral-300">colors</h2>
-                  <ul>
-                    {target.svgColorValues.split(" ").map((str) => (
-                      <li key={str}>{str}</li>
-                    ))}
-                  </ul>
+                  </pre>
                 </div>
               </div>
             </div>
@@ -71,6 +66,18 @@ const Page: NextPage<Props> = ({ target, hashid }) => {
 };
 
 export default Page;
+
+type ColorDot = {
+  fill: string;
+};
+
+function Dot({ fill }: ColorDot) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" height="16px" width="16px">
+      <circle cx="8" cy="10" r="6" fill={fill} />
+    </svg>
+  );
+}
 
 //////////////////////////
 // props

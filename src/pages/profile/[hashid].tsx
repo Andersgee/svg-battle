@@ -62,7 +62,9 @@ const Page: NextPage<Props> = ({ user, hashid }) => {
                       {target.title}
                     </Link>
                   </td>
-                  <td>({target._count.submissions} plays)</td>
+                  <td className="text-neutral-500">
+                    {target._count.submissions > 0 ? `(${target._count.submissions} players)` : ""}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -91,7 +93,7 @@ const Page: NextPage<Props> = ({ user, hashid }) => {
               ))}
             </tbody>
           </table>
-          {user.targetSubmissions.length === 0 && <p>no battles completed</p>}
+          {user.targetSubmissions.length === 0 && <p>no submissions</p>}
         </div>
       </main>
     </>

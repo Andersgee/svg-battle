@@ -73,6 +73,8 @@ function CreateTargetButton() {
         //revalidate (for the first time) the battle page
         const href = `/b/${hashidFromNumber(res.id)}`;
         revalidate(href);
+        //also revalidate home page (for latest community created section)
+        //revalidate("/");
       } catch (error) {
         setShowSignIn(true);
       }

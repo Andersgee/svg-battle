@@ -9,15 +9,15 @@ import { useCompareOutputTarget } from "src/hooks/useImageData";
 import { useDialogContext } from "src/contexts/Dialog";
 import { useSession } from "next-auth/react";
 import { hashidFromNumber } from "src/utils/hashids";
-import { useRouter } from "next/router";
 import { revalidate } from "src/utils/revalidate";
 
 type Props = {
   className?: string;
   target: Target;
+  description?: string;
 };
 
-export function Battle({ className, target }: Props) {
+export function Battle({ className, target, description }: Props) {
   const { setCode: setTargetCode } = useTargetContext();
   const { setCode } = useCodeContext();
   const { data: sessionData } = useSession();
@@ -52,6 +52,7 @@ export function Battle({ className, target }: Props) {
   return (
     <div className={className}>
       {/*<CanvasDebug />*/}
+      {description && <p className="text-center">{description}</p>}
       <div
         className="grid grid-cols-1 place-items-center items-start p-4
           sm:grid-cols-2  
