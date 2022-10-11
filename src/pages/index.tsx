@@ -7,7 +7,7 @@ import { SvgImg } from "src/components/SvgImg";
 import { prisma } from "src/server/db/client";
 import { inferAsyncReturnType } from "@trpc/server";
 import { Add } from "src/icons/Add";
-import { basicshapes } from "src/assets/basicshapes";
+import { basicshapes, pathshapes } from "src/assets/basicshapes";
 
 type Props = {
   targets: Targets;
@@ -53,6 +53,35 @@ const Page: NextPage<Props> = ({ targets }) => {
               );
             })}
           </div>
+
+          <h2 className="mt-8 text-2xl">Path Shapes</h2>
+          <p className=" mb-2">
+            The path element can draw anything the basic shapes can and more. An introduction to the path element is
+            available <Link href="https://www.w3.org/TR/SVG2/paths.html"> here</Link>.
+          </p>
+          <div className="grid w-full grid-cols-1 justify-items-center gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {pathshapes.map((target) => {
+              return (
+                <Link key={target.id} href={`/b/${hashidFromNumber(target.id)}`} className="relative hover:shadow-lg">
+                  <SvgImg
+                    svg={target.svg}
+                    alt={target.title}
+                    width={240}
+                    height={240}
+                    className="h-[240px] w-[240px] outline outline-1 outline-neutral-300 
+                    dark:outline-neutral-700"
+                  />
+                  <div
+                    className="absolute bottom-0 left-0 ml-2 mb-1 max-w-[200px] overflow-hidden text-ellipsis 
+                  whitespace-nowrap rounded-sm bg-white px-1 dark:bg-black"
+                  >
+                    {target.title}
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+
           <h2 className="mt-8 text-2xl">Latest battles</h2>
           <p className="mb-2"></p>
           <p className=" mb-2">

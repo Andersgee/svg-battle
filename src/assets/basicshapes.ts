@@ -1,7 +1,9 @@
 import type { Targets } from "src/pages/index";
 
+type HardcodedTargets = (Targets[number] & { description: string })[];
+
 /** for the basic shapes section (this corresponds to real targets) */
-export const basicshapes: (Targets[number] & { description: string })[] = [
+export const basicshapes: HardcodedTargets = [
   {
     title: "rect",
     id: 7,
@@ -37,5 +39,15 @@ export const basicshapes: (Targets[number] & { description: string })[] = [
     id: 12,
     svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" height="240px" width="240px"><rect fill="#cbd5e1" height="100%" width="100%"></rect><polygon points="30,120,90,180,150,60,210,120" fill="#475569"></polygon></svg>`,
     description: "This battle introduces the polygon element.",
+  },
+];
+
+export const pathshapes: HardcodedTargets = [
+  {
+    title: "Bezier curve",
+    id: 15,
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" height="240px" width="240px"><rect width="100%" height="100%" fill="#5eead4"></rect><path d="M 60 120 c 0 -120 60,-120 60 0 s 60 120 60 0" stroke-width="20" stroke="#0d9488" fill="none"></path></svg>`,
+    description:
+      "This battle introduces the [cubic bezier commands](https://www.w3.org/TR/SVG2/paths.html#PathDataCubicBezierCommands)",
   },
 ];
