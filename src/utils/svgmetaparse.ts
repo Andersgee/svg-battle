@@ -3,7 +3,7 @@
  * */
 export function colorValuesString(svg: string) {
   const list = attributeValues(svg, ["stroke", "fill", "stop-color"]);
-  return list.join(" ");
+  return list.filter((v) => !v.startsWith("url")).join(" ");
 }
 
 /**
@@ -24,7 +24,8 @@ export function tagNamesString(svg: string) {
  * ```
  */
 function attributesArray(str: string) {
-  const regex = /\s(\w+?)="(.+?)"/g;
+  //const regex = /\s(\w+?)="(.+?)"/g;
+  const regex = /(\S+)\s*=\s*[\"']?((?:.(?![\"']?\s+(?:\S+)=|[>\"']))?[^\"']*)[\"']?/g;
   return str.match(regex);
 }
 
@@ -43,7 +44,7 @@ function attributeValues(str: string, attrNames: string[]) {
   }
 
   //get relevant attributes
-  const filtered = attributes.filter((attr) => attrNames.some((keyword) => attr.startsWith(` ${keyword}`)));
+  const filtered = attributes.filter((attr) => attrNames.some((keyword) => attr.startsWith(keyword)));
 
   //get only value part. also remove quotes
   const values: string[] = [];
@@ -72,8 +73,16 @@ function tagNames(str: string) {
 
   const names: string[] = [];
   for (const s of tags) {
-    const val = s.split(" ")[0];
-    if (val) names.push(val);
+    const v = s.split(" ");
+    const val = v[0];
+
+    if (val) {
+      if (val.at(-1) === ">") {
+        names.push(val.slice(0, -1));
+      } else {
+        names.push(val);
+      }
+    }
   }
   const namesWithoutLessThanSign = names.map((name) => name.slice(1));
   return unique(namesWithoutLessThanSign);

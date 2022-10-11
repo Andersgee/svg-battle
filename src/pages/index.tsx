@@ -56,7 +56,7 @@ const Page: NextPage<Props> = ({ targets }) => {
 
           <h2 className="mt-8 text-2xl">Path Shapes</h2>
           <p className=" mb-2">
-            The path element can draw anything the basic shapes can and more. An introduction to the path element is
+            The path element can draw anything the basic shapes can and more! An introduction to the path element is
             available <Link href="https://www.w3.org/TR/SVG2/paths.html"> here</Link>.
           </p>
           <div className="grid w-full grid-cols-1 justify-items-center gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

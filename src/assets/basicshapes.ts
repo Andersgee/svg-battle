@@ -44,10 +44,24 @@ export const basicshapes: HardcodedTargets = [
 
 export const pathshapes: HardcodedTargets = [
   {
-    title: "Bezier curve",
+    title: "quadratic bézier",
+    id: 16,
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" height="240px" width="240px"><rect fill="#c4b5fd" height="100%" width="100%"></rect><path fill="none" stroke="#7c3aed" stroke-width="20" d="M 60 120 q 30 -120 60 0 t 60 0"></path></svg>`,
+    description:
+      "This battle introduces the [quatradic bézier commands](https://www.w3.org/TR/SVG2/paths.html#PathDataQuadraticBezierCommands)",
+  },
+  {
+    title: "cubic bézier",
     id: 15,
     svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" height="240px" width="240px"><rect width="100%" height="100%" fill="#5eead4"></rect><path d="M 60 120 c 0 -120 60,-120 60 0 s 60 120 60 0" stroke-width="20" stroke="#0d9488" fill="none"></path></svg>`,
     description:
-      "This battle introduces the [cubic bezier commands](https://www.w3.org/TR/SVG2/paths.html#PathDataCubicBezierCommands)",
+      "This battle introduces the [cubic bézier commands](https://www.w3.org/TR/SVG2/paths.html#PathDataCubicBezierCommands)",
+  },
+  {
+    title: "elliptical arc",
+    id: 17,
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" height="240px" width="240px"><rect width="100%" height="100%" fill="#fda4af"></rect><path d="M 60 120 a 30 60 0 1 1 60 0 a 30 60 0 1 0 60 0" stroke-width="20" stroke="#e11d48" fill="none"></path></svg>`,
+    description:
+      "This battle introduces the [elliptical arc commands](https://www.w3.org/TR/SVG2/paths.html#PathDataEllipticalArcCommands)",
   },
 ];
