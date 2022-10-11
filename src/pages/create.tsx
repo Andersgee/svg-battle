@@ -70,7 +70,7 @@ function CreateTargetButton() {
     if (sessionData?.user) {
       try {
         const res = await targetMutation.mutateAsync({ title: title, svg: sanitizedCode });
-        //ping the created battle for static generation before its clicked
+        //revalidate (for the first time) the battle page
         const href = `/b/${hashidFromNumber(res.id)}`;
         router.prefetch(href);
       } catch (error) {

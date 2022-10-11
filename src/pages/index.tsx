@@ -8,8 +8,6 @@ import { prisma } from "src/server/db/client";
 import { inferAsyncReturnType } from "@trpc/server";
 import { Add } from "src/icons/Add";
 
-const hmm = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" height="240px" width="240px"><rect fill="#FCD34D" height="100%" width="100%" y="0" x="0"></rect><rect fill="#b45309" height="120" width="120" y="0" x="0"></rect></svg>`;
-
 type Props = {
   targets: Targets;
 };
@@ -29,11 +27,11 @@ const Page: NextPage<Props> = ({ targets }) => {
         <div className="">
           <h2>Community created</h2>
           <div className="grid w-full grid-cols-1 justify-items-center gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            <Link href="/create" className="relative hover:shadow-lg">
+            <Link href="/create" className="relative hover:shadow-lg ">
               <Add
                 width={240}
                 height={240}
-                className="fill-neutral-600 hover:fill-neutral-700 dark:fill-neutral-500 dark:hover:fill-neutral-400"
+                className="fill-neutral-600 hover:fill-neutral-700 dark:fill-neutral-500 dark:hover:fill-neutral-400 "
               />
               <p className="absolute bottom-0 left-0 ml-2 mb-1 max-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap">
                 create new
@@ -48,9 +46,13 @@ const Page: NextPage<Props> = ({ targets }) => {
                     alt={target.title}
                     width={240}
                     height={240}
-                    className="block outline outline-1 outline-neutral-300 dark:outline-neutral-700"
+                    className="h-[240px] w-[240px] outline outline-1 outline-neutral-300 
+                    dark:outline-neutral-700"
                   />
-                  <p className="absolute bottom-0 left-0 ml-2 mb-1 max-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap">
+                  <p
+                    className="absolute bottom-0 left-0 ml-2 mb-1 max-w-[200px] overflow-hidden text-ellipsis 
+                  whitespace-nowrap rounded-sm bg-white px-1 dark:bg-black"
+                  >
                     {target.title}
                   </p>
                 </Link>

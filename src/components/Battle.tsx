@@ -8,6 +8,8 @@ import type { Target } from "src/pages/b/[hashid]";
 import { useCompareOutputTarget } from "src/hooks/useImageData";
 import { useDialogContext } from "src/contexts/Dialog";
 import { useSession } from "next-auth/react";
+import { hashidFromNumber } from "src/utils/hashids";
+import { useRouter } from "next/router";
 
 type Props = {
   className?: string;
@@ -74,6 +76,7 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
   const targetMutation = trpc.target.submit.useMutation();
   const { data: sessionData } = useSession();
   const [showWarning, setShowWarning] = useState(false);
+  const router = useRouter();
 
   const onClick = async () => {
     if (sessionData?.user) {
@@ -83,6 +86,18 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
           code,
           percent,
         });
+        //revalidate profile
+        const href = `/profile/${hashidFromNumber(sessionData.user.intId)}`;
+        fetch("/api/revalidate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ path: href }),
+        });
+
+        /*
+        const href = `/profile/${hashidFromNumber(sessionData.user.intId)}`;
+        router.prefetch(href);
+        */
       } catch (error) {
         setShowSignIn(true);
       }
