@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Head } from "src/components/Head";
 import { Nav } from "src/components/Nav";
+import { SvgImg } from "src/components/SvgImg";
 //import { trpc } from "src/utils/trpc";
 import { prisma } from "src/server/db/client";
 import { hashidFromNumber, numberFromHashid } from "src/utils/hashids";
@@ -44,22 +45,45 @@ const Page: NextPage<Props> = ({ user, hashid }) => {
             <h1 className="text-2xl">{user.name}</h1>
           </div>
 
-          <h2 className="mt-4 text-base text-neutral-700 dark:text-neutral-300">created battles</h2>
-          <ul className="">
-            {user.createdTargets.map((target) => (
-              <li key={target.id} className="mt-1">
-                <Link href={`/b/${hashidFromNumber(target.id)}`}>{target.title}</Link>
-              </li>
-            ))}
-          </ul>
+          <h2 className="mt-4 text-center text-lg text-neutral-700 dark:text-neutral-300">created battles</h2>
+          <table className="">
+            <tbody>
+              {user.createdTargets.map((target) => (
+                <tr key={target.id} className="py-2">
+                  <td className="">
+                    <Link className="mr-2 flex items-center" href={`/b/${hashidFromNumber(target.id)}`}>
+                      <SvgImg
+                        svg={target.svg}
+                        alt={target.title}
+                        width={48}
+                        height={48}
+                        className="mr-2 h-[48px] w-[48px] outline outline-1 outline-neutral-300 dark:outline-neutral-700"
+                      />
+                      {target.title}
+                    </Link>
+                  </td>
+                  <td>({target._count.submissions} plays)</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
-          <h2 className="mt-4 text-base text-neutral-700 dark:text-neutral-300">points</h2>
+          <h2 className="mt-4 text-center text-lg text-neutral-700 dark:text-neutral-300">submissions</h2>
           <table className="">
             <tbody>
               {user.targetSubmissions.map((submission) => (
                 <tr key={submission.targetId} className="pt-1">
                   <td>
-                    <Link href={`/b/${hashidFromNumber(submission.targetId)}`}>{submission.target.title}</Link>
+                    <Link className="mr-2 flex items-center" href={`/b/${hashidFromNumber(submission.targetId)}`}>
+                      <SvgImg
+                        svg={submission.target.svg}
+                        alt={submission.target.title}
+                        width={48}
+                        height={48}
+                        className="mr-2 h-[48px] w-[48px] outline outline-1 outline-neutral-300 dark:outline-neutral-700"
+                      />
+                      {submission.target.title}
+                    </Link>
                   </td>
                   <td>({submission.score} points)</td>
                 </tr>
@@ -123,6 +147,7 @@ async function getUser(id: number) {
           target: {
             select: {
               title: true,
+              svg: true,
             },
           },
         },
@@ -132,6 +157,12 @@ async function getUser(id: number) {
           id: true,
           title: true,
           createdAt: true,
+          svg: true,
+          _count: {
+            select: {
+              submissions: true,
+            },
+          },
         },
       },
     },

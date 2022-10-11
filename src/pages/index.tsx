@@ -25,8 +25,8 @@ const Page: NextPage<Props> = ({ targets }) => {
       />
       <Nav />
 
-      <main className=" flex justify-center">
-        <div className="container">
+      <main className="flex justify-center">
+        <div className="">
           <h2>Community created</h2>
           <div className="grid w-full grid-cols-1 justify-items-center gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             <Link href="/create" className="relative hover:shadow-lg">

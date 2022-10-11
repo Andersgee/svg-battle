@@ -201,7 +201,7 @@ function svgObjectUrl(svg: string) {
  * ```
  */
 export function useImageSourceFromSvg(svg: string, width = 240, height = 240) {
-  const [src, setSrc] = useState("");
+  const [src, setSrc] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const url = svgObjectUrl(svg);
@@ -217,15 +217,10 @@ export function useImageSourceFromSvg(svg: string, width = 240, height = 240) {
     if (!ctx) return;
 
     img.src = url;
-    img.addEventListener(
-      "load",
-      () => {
-        ctx.drawImage(img, 0, 0, width, height);
-        console.log("draing image now");
-        setSrc(canvas.toDataURL());
-      },
-      { once: true },
-    );
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0, width, height);
+      setSrc(canvas.toDataURL());
+    };
 
     return () => {
       img.remove();
