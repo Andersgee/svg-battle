@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useId, useState } from "react";
 import { CanvasCode } from "src/components/Canvas";
 import { Editor } from "src/components/Editor";

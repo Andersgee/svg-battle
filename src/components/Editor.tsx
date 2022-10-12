@@ -4,12 +4,6 @@ import { Draghandle } from "src/icons/Draghandle";
 import { useCodeContext } from "src/contexts/Code";
 //import "prismjs/components/prism-markup";
 
-const placeholder = `<svg width="100px" height="100px" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-<rect x="24" y="24" width="10" height="10" fill="#00c"/>
-<circle cx="24" cy="24" r="10" fill="#00c"/>
-</svg>
-`;
-
 //const placeholder = "";
 const MIN_HEIGHT = 240;
 

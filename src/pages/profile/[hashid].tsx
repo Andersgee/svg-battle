@@ -38,8 +38,8 @@ const Page: NextPage<Props> = ({ user, hashid }) => {
           <div className="flex justify-center align-baseline">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={user.image!}
-              alt={user.name!}
+              src={user.image || ""}
+              alt={user.name || ""}
               className="mr-2 h-10 w-10 rounded-full shadow-imageborder  shadow-black dark:shadow-white"
             />
             <h1 className="text-2xl">{user.name}</h1>
