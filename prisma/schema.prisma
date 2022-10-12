@@ -74,6 +74,7 @@ model Target {
     submissions    TargetSubmission[]
     svgColorValues String             @db.VarChar(1000)
     svgTagNames    String             @db.VarChar(1000)
+    description    String?            @db.VarChar(3000)
 }
 
 //relation tables https://www.prisma.io/docs/concepts/components/prisma-schema/relations/many-to-many-relations#relation-tables

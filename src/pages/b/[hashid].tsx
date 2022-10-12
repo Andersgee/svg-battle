@@ -11,6 +11,7 @@ import { TargetProvider } from "src/contexts/Target";
 import { prisma } from "src/server/db/client";
 import { hashidFromNumber, numberFromHashid } from "src/utils/hashids";
 import { stringFromParam } from "src/utils/param";
+import ReactMarkdown from "react-markdown";
 
 type Props = {
   target: Target;
@@ -39,10 +40,17 @@ const Page: NextPage<Props> = ({ target, hashid }) => {
         <main className="">
           <div className="flex justify-center">
             <div>
-              <h1 className="text-center">
-                {target.title} by{" "}
-                <Link href={`/profile/${hashidFromNumber(target.creator.intId)}`}>{target.creator.name}</Link>
-              </h1>
+              {target.description ? (
+                <>
+                  <h1 className="text-center capitalize">{target.title}</h1>
+                  <ReactMarkdown className="">{target.description}</ReactMarkdown>
+                </>
+              ) : (
+                <h1 className="text-center">
+                  {target.title} by{" "}
+                  <Link href={`/profile/${hashidFromNumber(target.creator.intId)}`}>{target.creator.name}</Link>
+                </h1>
+              )}
               <div className="flex justify-center gap-4">
                 <div>
                   <pre>tags: {target.svgTagNames}</pre>
@@ -122,6 +130,9 @@ async function getTarget(id: number) {
         select: {
           userId: true,
           codeLength: true,
+        },
+        orderBy: {
+          codeLength: "asc",
         },
       },
       creator: {
