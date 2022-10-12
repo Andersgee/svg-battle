@@ -149,6 +149,7 @@ const Page: NextPage<Props> = ({ targets }) => {
               );
             })}
           </div>
+          <div className="pb-40"></div>
         </div>
       </main>
     </>

@@ -79,4 +79,10 @@ export const intermediateshapes: HardcodedTargets = [
     svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" height="240px" width="240px"><defs>    <radialGradient r="100" cy="120" cx="120" gradientUnits="userSpaceOnUse" id="MyGradient">      <stop stop-color="#dbeafe" offset="0%"></stop>      <stop stop-color="#6366f1" offset="50%"></stop>      <stop stop-color="#dbeafe" offset="100%"></stop>    </radialGradient>  </defs>  <rect height="100%" width="100%" y="0" x="0" fill="url(#MyGradient)"></rect></svg>`,
     description: "This battle introduces [radial gradients](https://www.w3.org/TR/SVG2/pservers.html#RadialGradients)",
   },
+  {
+    title: "pattern",
+    id: 23,
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" height="240px" width="240px"><defs><pattern height="16" width="16" patternUnits="userSpaceOnUse" id="MyPattern"><rect fill="#65a30d" height="12" width="12"></rect></pattern> </defs><rect fill="#bef264" height="100%" width="100%"></rect><circle r="90" cy="120" cx="120" fill="url(#MyPattern)"></circle></svg>`,
+    description: "This battle introduces [patterns](https://www.w3.org/TR/SVG2/pservers.html#Patterns)",
+  },
 ];
