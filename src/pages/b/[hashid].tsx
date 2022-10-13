@@ -27,10 +27,13 @@ const Page: NextPage<Props> = ({ target, hashid }) => {
   return (
     <>
       <Head
-        title={`${target.title} | battle | svg battle`}
-        description={`Svg battle - ${target.title} by ${target.creator.name}.`}
+        title={`${target.title} | svg battle`}
+        description={`svgbattle - ${target.title} by ${target.creator.name}.`}
         domainUrl="https://svgbattle.andyfx.net"
         url={`https://svgbattle.andyfx.net/b/${hashid}`}
+        imageUrl={`https://svgbattle.andyfx.net/api/svgog?title=${encodeURIComponent(
+          `${target.title} by ${target.creator.name} | svgbattle`,
+        )}&svg=${encodeURIComponent(target.svg)}`}
       />
       <main className="">
         <div className="flex justify-center">
