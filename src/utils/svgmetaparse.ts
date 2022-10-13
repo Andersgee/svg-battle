@@ -2,8 +2,10 @@
  * from a given svg string, get the used colors as a string (space separated list)
  * */
 export function colorValuesString(svg: string) {
-  const list = attributeValues(svg, ["stroke", "fill", "stop-color"]);
-  return list.filter((v) => !v.startsWith("url")).join(" ");
+  const list = attributeValues(svg, ["stroke=", "fill=", "stop-color="]);
+  //return list.filter((v) => !v.startsWith("url")).join(" ");
+
+  return filter_not_some_startsWith(list, ["url", "none"]).join(" ");
 }
 
 /**
@@ -11,7 +13,8 @@ export function colorValuesString(svg: string) {
  */
 export function tagNamesString(svg: string) {
   const list = tagNames(svg);
-  return list.filter((str) => str !== "svg").join(" ");
+  //return list.filter((str) => str !== "svg").join(" ");
+  return filter_not_some_startsWith(list, ["svg"]).join(" ");
 }
 
 ///////////////////
@@ -29,6 +32,18 @@ function attributesArray(str: string) {
   return str.match(regex);
 }
 
+function filter_not_some_startsWith(strings: string[], v: string[]) {
+  return strings.filter((s) => !v.some((x) => s.startsWith(x)));
+}
+
+function filter_some_startsWith(strings: string[], v: string[]) {
+  return strings.filter((s) => v.some((x) => s.startsWith(x)));
+}
+
+function withoutQuotes(str?: string) {
+  return str?.replaceAll('"', "").replaceAll("'", "") || "";
+}
+
 /**
  * extract attribute values from svg string
  *
@@ -39,17 +54,20 @@ function attributesArray(str: string) {
  */
 function attributeValues(str: string, attrNames: string[]) {
   const attributes = attributesArray(str);
+  console.log({ attributes });
   if (!attributes) {
     return [];
   }
 
   //get relevant attributes
-  const filtered = attributes.filter((attr) => attrNames.some((keyword) => attr.startsWith(keyword)));
+  const filtered = filter_some_startsWith(attributes, attrNames);
+
+  console.log({ filtered });
 
   //get only value part. also remove quotes
   const values: string[] = [];
   for (const s of filtered) {
-    const val = s.split("=")[1]?.replaceAll('"', "");
+    const val = withoutQuotes(s.split("=")[1]);
     if (val) values.push(val);
   }
 
