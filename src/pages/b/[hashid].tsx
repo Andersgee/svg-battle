@@ -32,7 +32,7 @@ const Page: NextPage<Props> = ({ target, hashid }) => {
         domainUrl="https://svgbattle.andyfx.net"
         url={`https://svgbattle.andyfx.net/b/${hashid}`}
         imageUrl={`https://svgbattle.andyfx.net/api/svgog?title=${encodeURIComponent(
-          `${target.title} by ${target.creator.name} | svgbattle`,
+          `${target.title} by ${target.creator.name} | svg battle`,
         )}&svg=${encodeURIComponent(target.svg)}`}
       />
       <main className="">
