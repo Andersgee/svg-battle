@@ -205,6 +205,7 @@ export function useImageSourceFromSvg(svg: string, width = 240, height = 240) {
 
   useEffect(() => {
     const url = svgObjectUrl(svg);
+
     //const img = document.createElement("img");
     //img.width = 240;
     //img.height = 240;

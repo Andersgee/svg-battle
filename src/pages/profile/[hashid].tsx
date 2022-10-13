@@ -3,7 +3,6 @@ import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Head } from "src/components/Head";
-import { Nav } from "src/components/Nav";
 import { SvgImg } from "src/components/SvgImg";
 //import { trpc } from "src/utils/trpc";
 import { prisma } from "src/server/db/client";
@@ -32,7 +31,6 @@ const Page: NextPage<Props> = ({ user, hashid }) => {
         domainUrl="https://svgbattle.andyfx.net"
         url={`https://svgbattle.andyfx.net/profile/${hashid}`}
       />
-      <Nav />
       <main className="container mx-auto flex min-h-screen justify-center p-4">
         <div>
           <div className="flex justify-center align-baseline">

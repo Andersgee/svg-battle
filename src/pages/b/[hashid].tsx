@@ -4,9 +4,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Battle } from "src/components/Battle";
 import { Head } from "src/components/Head";
-import { Nav } from "src/components/Nav";
-import { CodeProvider } from "src/contexts/Code";
-import { TargetProvider } from "src/contexts/Target";
 //import { trpc } from "src/utils/trpc";
 import { prisma } from "src/server/db/client";
 import { hashidFromNumber, numberFromHashid } from "src/utils/hashids";
@@ -28,48 +25,45 @@ const Page: NextPage<Props> = ({ target, hashid }) => {
 
   //const targetQuery = trpc.target.getAll.useQuery(undefined, { refetchOnWindowFocus: false });
   return (
-    <CodeProvider>
-      <TargetProvider>
-        <Head
-          title={`${target.title} | battle | svg battle`}
-          description={`Svg battle - ${target.title} by ${target.creator.name}.`}
-          domainUrl="https://svgbattle.andyfx.net"
-          url={`https://svgbattle.andyfx.net/b/${hashid}`}
-        />
-        <Nav />
-        <main className="">
-          <div className="flex justify-center">
-            <div>
-              {target.description ? (
-                <>
-                  <h1 className="text-center capitalize">{target.title}</h1>
-                  <ReactMarkdown className="">{target.description}</ReactMarkdown>
-                </>
-              ) : (
-                <h1 className="text-center">
-                  {target.title} by{" "}
-                  <Link href={`/profile/${hashidFromNumber(target.creator.intId)}`}>{target.creator.name}</Link>
-                </h1>
-              )}
-              <div className="flex justify-center gap-4">
-                <div>
-                  <pre>tags: {target.svgTagNames}</pre>
-                  <pre className="flex">
-                    <div>colors: </div>
-                    {target.svgColorValues.split(" ").map((c) => (
-                      <div key={c} className="mr-2 flex">
-                        <Dot fill={c} /> <span>{c}</span>
-                      </div>
-                    ))}
-                  </pre>
-                </div>
+    <>
+      <Head
+        title={`${target.title} | battle | svg battle`}
+        description={`Svg battle - ${target.title} by ${target.creator.name}.`}
+        domainUrl="https://svgbattle.andyfx.net"
+        url={`https://svgbattle.andyfx.net/b/${hashid}`}
+      />
+      <main className="">
+        <div className="flex justify-center">
+          <div>
+            {target.description ? (
+              <>
+                <h1 className="text-center capitalize">{target.title}</h1>
+                <ReactMarkdown className="">{target.description}</ReactMarkdown>
+              </>
+            ) : (
+              <h1 className="text-center">
+                {target.title} by{" "}
+                <Link href={`/profile/${hashidFromNumber(target.creator.intId)}`}>{target.creator.name}</Link>
+              </h1>
+            )}
+            <div className="flex justify-center gap-4">
+              <div>
+                <pre>tags: {target.svgTagNames}</pre>
+                <pre className="flex">
+                  <div>colors: </div>
+                  {target.svgColorValues.split(" ").map((c) => (
+                    <div key={c} className="mr-2 flex">
+                      <Dot fill={c} /> <span>{c}</span>
+                    </div>
+                  ))}
+                </pre>
               </div>
             </div>
           </div>
-          <Battle target={target} />
-        </main>
-      </TargetProvider>
-    </CodeProvider>
+        </div>
+        <Battle target={target} />
+      </main>
+    </>
   );
 };
 

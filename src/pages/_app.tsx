@@ -7,6 +7,9 @@ import { trpc } from "../utils/trpc";
 import { ThemeProvider } from "next-themes";
 import PlausibleProvider from "next-plausible";
 import { DialogProvider } from "src/contexts/Dialog";
+import { CodeProvider } from "src/contexts/Code";
+import { TargetProvider } from "src/contexts/Target";
+import { Layout } from "src/components/Layout";
 
 const MyApp: AppType<{ session: Session | null }> = ({ Component, pageProps: { session, ...pageProps } }) => {
   return (
@@ -14,7 +17,13 @@ const MyApp: AppType<{ session: Session | null }> = ({ Component, pageProps: { s
       <ThemeProvider attribute="class">
         <SessionProvider session={session}>
           <DialogProvider>
-            <Component {...pageProps} />
+            <CodeProvider>
+              <TargetProvider>
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              </TargetProvider>
+            </CodeProvider>
           </DialogProvider>
         </SessionProvider>
       </ThemeProvider>

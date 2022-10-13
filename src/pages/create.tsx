@@ -5,8 +5,7 @@ import { useId, useState } from "react";
 import { CanvasCode } from "src/components/Canvas";
 import { Editor } from "src/components/Editor";
 import { Head } from "src/components/Head";
-import { Nav } from "src/components/Nav";
-import { CodeProvider, useCodeContext } from "src/contexts/Code";
+import { useCodeContext } from "src/contexts/Code";
 import { useDialogContext } from "src/contexts/Dialog";
 import { hashidFromNumber } from "src/utils/hashids";
 import { revalidate } from "src/utils/revalidate";
@@ -16,14 +15,13 @@ import { trpc } from "src/utils/trpc";
 const Page: NextPage = () => {
   //const targetQuery = trpc.target.getAll.useQuery(undefined, { refetchOnWindowFocus: false });
   return (
-    <CodeProvider>
+    <>
       <Head
         title="create | svg battle"
         description="Battle others by drawing images with svg."
         domainUrl="https://svgbattle.andyfx.net"
         url="https://svgbattle.andyfx.net"
       />
-      <Nav />
       <main className="">
         <div className="flex justify-center">
           <h1>Create new battle</h1>
@@ -48,7 +46,7 @@ const Page: NextPage = () => {
           </div>
         </div>
       </main>
-    </CodeProvider>
+    </>
   );
 };
 
