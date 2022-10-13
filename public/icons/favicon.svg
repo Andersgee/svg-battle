@@ -1,6 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="120" height="100"><svg width="120" height="100" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
-<title>Andyfx Logo</title>
-<path fill="none" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" stroke="#E3001B" d="M 18 92 L 39 30 L 75 80 L 102 8"></path>
-<path fill="none" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" stroke="#A4D1F3" d="M 18 92 L 102 8"></path>
-</svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
-</style></svg>
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" height="240px" width="240px">
+<clipPath id="myclip">
+  <path d="M 0 40 L 240 200 v -240" />
+</clipPath>
+<clipPath id="myclip2">
+  <path d="M 0 40 L 240 200 v 40 h -240" />
+</clipPath>
+
+  <path
+    d="M 180 60 c -120 -20 -120 40 -60 60 s 60 90 -66 50"
+    clip-path="url(#myclip)"
+    stroke-linecap="butt"
+    fill="none"
+    stroke="#38bdf8"
+    stroke-width="40"
+  />
+  <path
+    d="M 180 60 c -120 -20 -120 40 -60 60 s 60 90 -66 50"
+    clip-path="url(#myclip2)"
+    stroke-linecap="butt"
+    fill="none"
+    stroke="#0369a1"
+    stroke-width="40"
+  />
+</svg>

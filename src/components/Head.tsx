@@ -40,7 +40,7 @@ export function Head({
   description,
   domainUrl,
   url,
-  imageUrl = "/icons/andyfx-192x192.png",
+  imageUrl = "/icons/icon-192x192.png",
   twitter_label1 = "",
   twitter_data1 = "",
   twitter_label2 = "",
