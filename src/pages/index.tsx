@@ -15,7 +15,7 @@ const Page: NextPage<Props> = ({ targets }) => {
   return (
     <>
       <Head
-        title="svg batlle"
+        title="svg battle"
         description="Battle others by drawing images with svg."
         domainUrl="https://svgbattle.andyfx.net"
         url="https://svgbattle.andyfx.net"
