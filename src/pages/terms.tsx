@@ -10,9 +10,27 @@ const Page: NextPage = () => {
         domainUrl="https://svgbattle.andyfx.net"
         url="https://svgbattle.andyfx.net"
       />
-      <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
-        <h1 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[5rem]">terms of service</h1>
-        <p>todo</p>
+      <main className="flex justify-center p-4">
+        <div className="">
+          <h1 className="text-4xl font-extrabold leading-normal text-gray-700">terms of service</h1>
+          <ul className="list-disc">
+            <li>
+              <p>
+                svg battle is an online code golfing game where players write SVG to visually replicate targets. The
+                concept is inspired by css battle
+              </p>
+            </li>
+            <li>
+              <p>Dont spam/abuse the service or create offensive content.</p>
+            </li>
+            <li>
+              <p>
+                Misuse of the service in any way deemed inappropriate by the creators may result in removal of your
+                account.
+              </p>
+            </li>
+          </ul>
+        </div>
       </main>
     </>
   );
