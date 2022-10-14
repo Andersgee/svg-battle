@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { CanvasCode } from "src/components/Canvas";
 import { Editor } from "src/components/Editor";
 import { Head } from "src/components/Head";
@@ -14,6 +14,20 @@ import { trpc } from "src/utils/trpc";
 
 const Page: NextPage = () => {
   //const targetQuery = trpc.target.getAll.useQuery(undefined, { refetchOnWindowFocus: false });
+  const { data: sessionData } = useSession();
+  const { setCode } = useCodeContext();
+
+  useEffect(() => {
+    if (sessionData?.user) {
+      const tempcode = localStorage.getItem("tempcode");
+      if (tempcode) {
+        setCode(tempcode);
+        localStorage.removeItem("tempcode");
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessionData?.user]);
+
   return (
     <>
       <Head

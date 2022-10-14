@@ -54,15 +54,12 @@ function withoutQuotes(str?: string) {
  */
 function attributeValues(str: string, attrNames: string[]) {
   const attributes = attributesArray(str);
-  console.log({ attributes });
   if (!attributes) {
     return [];
   }
 
   //get relevant attributes
   const filtered = filter_some_startsWith(attributes, attrNames);
-
-  console.log({ filtered });
 
   //get only value part. also remove quotes
   const values: string[] = [];

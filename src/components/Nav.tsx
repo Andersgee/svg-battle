@@ -5,7 +5,7 @@ import { ThemeToggleButton } from "./ThemeToggleButton";
 
 export function Nav() {
   return (
-    <div className="flex items-center justify-between">
+    <nav className="flex items-center justify-between">
       <div>
         <Link href="/">
           <Svgbattle />
@@ -16,6 +16,6 @@ export function Nav() {
         <ThemeToggleButton />
         <ProfileButton />
       </div>
-    </div>
+    </nav>
   );
 }
