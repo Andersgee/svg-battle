@@ -58,6 +58,12 @@ const Page: NextPage = () => {
           </p>
           {error && <p className="text-red-600">something went wrong</p>}
           {error && <p className="text-red-600">error: {JSON.stringify(error)}</p>}
+          {error === "OAuthAccountNotLinked" && (
+            <p className="text-red-600">
+              note: If you already have an account, you must sign in with the same provider as when you created the
+              account.
+            </p>
+          )}
         </div>
       </main>
     </>

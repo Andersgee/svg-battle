@@ -1,10 +1,10 @@
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" height="240px" width="240px">
 <clipPath id="myclip">
-  <path d="M 0 40 L 240 200 v -240" />
+  <path d="M 0 40 L 240 200 v -240 h -240 z" />
 </clipPath>
 <clipPath id="myclip2">
-  <path d="M 0 40 L 240 200 v 40 h -240" />
+  <path d="M 0 40 L 240 200 v 40 h -240 z" />
 </clipPath>
 
   <path
