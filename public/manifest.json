@@ -1,6 +1,6 @@
 {
-  "name": "sharpest-mon",
-  "short_name": "sharpest-mon",
+  "name": "svg-battle",
+  "short_name": "svg-battle",
   "display": "fullscreen",
   "orientation": "any",
   "scope": "/",
