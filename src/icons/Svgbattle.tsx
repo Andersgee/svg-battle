@@ -45,27 +45,32 @@ s 60 90 -66 50"
 */
 export function Svgbattle({ className, ...rest }: Props) {
   return (
-    <svg className={`hover:opacity-80 ${className}`} width="48" height="48" viewBox="0 0 240 240" {...rest}>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" height="240px" width="240px">
-        <path
-          className="stroke-sky-400 dark:stroke-sky-200"
-          d="M 180 60 c -120 -20 -120 40 -60 60 s 60 90 -66 50"
-          clipPath="path('M 0 40 L 240 200 v -240')"
-          strokeLinecap="butt"
-          fill="none"
-          stroke="#38bdf8"
-          strokeWidth="40"
-        ></path>
-        <path
-          className="stroke-sky-700 dark:stroke-sky-500"
-          d="M 180 60 c -120 -20 -120 40 -60 60 s 60 90 -66 50"
-          clipPath="path('M 0 40 L 240 200 v 40 h -240')"
-          strokeLinecap="butt"
-          fill="none"
-          stroke="#0369a1"
-          strokeWidth="40"
-        ></path>
-      </svg>
+    <svg
+      className={`hover:opacity-80 ${className}`}
+      xmlns="http://www.w3.org/2000/svg"
+      width="48"
+      height="48"
+      viewBox="0 0 240 240"
+      {...rest}
+    >
+      <path
+        className="stroke-sky-400 dark:stroke-sky-200"
+        d="M 180 60 c -120 -20 -120 40 -60 60 s 60 90 -66 50"
+        clipPath="path('M 0 40 L 240 200 v -240 h -240 z')"
+        strokeLinecap="butt"
+        fill="none"
+        stroke="#38bdf8"
+        strokeWidth="40"
+      />
+      <path
+        className="stroke-sky-700 dark:stroke-sky-500"
+        d="M 180 60 c -120 -20 -120 40 -60 60 s 60 90 -66 50"
+        clipPath="path('M 0 40 L 240 200 v 40 h -240 z')"
+        strokeLinecap="butt"
+        fill="none"
+        stroke="#0369a1"
+        strokeWidth="40"
+      />
     </svg>
   );
 }
