@@ -17,7 +17,7 @@ interface Props {
   url: string;
   /**
    * the image shown when linking. should be large like 400?
-   * default to "/icons/andyfx-192x192.png" but important to not forget this one
+   * default to "/icons/icon-192x192.png" but important to not forget this one
    */
   imageUrl?: string;
   /**

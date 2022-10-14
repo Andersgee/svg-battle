@@ -19,6 +19,7 @@ const Page: NextPage<Props> = ({ targets }) => {
         description="Battle others by drawing images with svg."
         domainUrl="https://svgbattle.andyfx.net"
         url="https://svgbattle.andyfx.net"
+        imageUrl="/share.png"
       />
 
       <main className="flex justify-center">
