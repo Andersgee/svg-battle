@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useCodeContext } from "src/contexts/Code";
 import { useTargetContext } from "src/contexts/Target";
 import { trpc } from "src/utils/trpc";
-import { CanvasCode, CanvasTarget } from "./Canvas";
+import { CanvasCode, CanvasTarget, CanvasDebug } from "./Canvas";
 import { Editor } from "./Editor";
 import type { Target } from "src/pages/b/[hashid]";
 import { useCompareOutputTarget } from "src/hooks/useImageData";
@@ -51,7 +51,6 @@ export function Battle({ className, target, description }: Props) {
 
   return (
     <div className={className}>
-      {/*<CanvasDebug />*/}
       {description && <p className="text-center">{description}</p>}
       <div
         className="grid grid-cols-1 place-items-center items-start p-4
@@ -64,7 +63,10 @@ export function Battle({ className, target, description }: Props) {
         </div>
         <div className="sm:order-1 lg:order-2">
           <CompareInfo />
-          <CanvasCode />
+          <div className="group h-[240px] w-[240px]">
+            <CanvasCode className="absolute block group-hover:hidden" />
+            <CanvasDebug className="absolute hidden group-hover:block" />
+          </div>
         </div>
 
         <div className="w-full sm:order-3 sm:col-span-2 lg:order-1">
