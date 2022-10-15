@@ -50,16 +50,16 @@ const Page: NextPage<Props> = ({ target, hashid }) => {
               </h1>
             )}
             <div className="flex justify-center gap-4">
-              <div>
-                <pre>tags: {target.svgTagNames}</pre>
-                <pre className="flex">
-                  <div>colors: </div>
+              <div className="mx-1">
+                <code>tags: {target.svgTagNames}</code>
+                <code className="flex flex-wrap gap-x-2">
+                  <span>colors</span>
                   {target.svgColorValues.split(" ").map((c) => (
-                    <div key={c} className="mr-2 flex">
+                    <span key={c} className="flex ">
                       <Dot fill={c} /> <span>{c}</span>
-                    </div>
+                    </span>
                   ))}
-                </pre>
+                </code>
               </div>
             </div>
           </div>
