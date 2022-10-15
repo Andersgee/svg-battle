@@ -1,9 +1,9 @@
-import { t, authedProcedure } from "../trpc";
+import { procedure, authedProcedure, router } from "../trpc";
 import { z } from "zod";
 import { colorValuesString, tagNamesString } from "src/utils/svgmetaparse";
 import { calcScore } from "src/utils/score";
 
-export const targetRouter = t.router({
+export const targetRouter = router({
   create: authedProcedure
     .input(
       z.object({
@@ -70,7 +70,7 @@ export const targetRouter = t.router({
         },
       });
     }),
-  getAll: t.procedure.query(({ ctx }) => {
+  getAll: procedure.query(({ ctx }) => {
     return ctx.prisma.target.findMany();
   }),
 });
