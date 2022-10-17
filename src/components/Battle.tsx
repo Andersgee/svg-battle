@@ -96,8 +96,9 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
   useEventListener("keydown", (e) => {
     if ((e.metaKey || e.ctrlKey) && e.code === "KeyS") {
       e.preventDefault();
-      onClick();
-      //console.log("should save now");
+      if (!targetMutation.isLoading) {
+        onClick();
+      }
     }
   });
 
