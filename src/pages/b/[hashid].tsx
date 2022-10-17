@@ -65,6 +65,17 @@ const Page: NextPage<Props> = ({ target, hashid }) => {
           </div>
         </div>
         <Battle target={target} />
+
+        <div className="flex justify-center">
+          <div>
+            {target.submissions.length > 0 && <h3>top scores</h3>}
+            {target.submissions.map((s) => (
+              <div key={s.user.intId}>
+                {s.score} (by <Link href={`/profile/${hashidFromNumber(s.user.intId)}`}>{s.user.name}</Link>)
+              </div>
+            ))}
+          </div>
+        </div>
       </main>
     </>
   );
@@ -124,12 +135,19 @@ async function getTarget(id: number) {
     where: { id },
     include: {
       submissions: {
+        take: 3,
         select: {
-          userId: true,
+          user: {
+            select: {
+              name: true,
+              intId: true,
+            },
+          },
           codeLength: true,
+          score: true,
         },
         orderBy: {
-          codeLength: "asc",
+          score: "desc",
         },
       },
       creator: {
