@@ -10,6 +10,7 @@ import { useDialogContext } from "src/contexts/Dialog";
 import { useSession } from "next-auth/react";
 import { hashidFromNumber } from "src/utils/hashids";
 import { revalidate } from "src/utils/revalidate";
+import useEventListener from "src/hooks/useEventListener";
 
 type Props = {
   className?: string;
@@ -91,6 +92,14 @@ function SubmitCodeButton({ targetId }: SubmitCodeButtonProps) {
   const targetMutation = trpc.target.submit.useMutation();
   const { data: sessionData } = useSession();
   const [showWarning, setShowWarning] = useState(false);
+
+  useEventListener("keydown", (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.code === "KeyS") {
+      e.preventDefault();
+      onClick();
+      //console.log("should save now");
+    }
+  });
 
   const onClick = async () => {
     if (sessionData?.user) {
