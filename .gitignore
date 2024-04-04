@@ -38,3 +38,5 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+pscale_dump_svg-battle_main_20240402_135607/
